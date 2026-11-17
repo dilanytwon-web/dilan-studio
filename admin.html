@@ -209,10 +209,8 @@
 
     .auth-notice {
       display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
+      flex-direction: column;
+      gap: 12px;
       padding: 14px 18px;
       border-radius: var(--radius-md);
       background-color: var(--status-warning-bg);
@@ -222,10 +220,58 @@
       font-size: 0.875rem;
     }
 
+    .auth-notice-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
     .auth-notice.is-authenticated {
       background-color: var(--status-success-bg);
       border-color: #bbf7d0;
       color: var(--status-success);
+    }
+
+    .auth-notice.is-error {
+      background-color: var(--status-danger-bg);
+      border-color: #fecaca;
+      color: var(--status-danger);
+    }
+
+    .domain-help-panel {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(15, 23, 42, 0.12);
+    }
+
+    .domain-help-text {
+      flex: 1 1 320px;
+      line-height: 1.5;
+    }
+
+    .domain-help-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .domain-code {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 5px;
+      background-color: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(15, 23, 42, 0.15);
+      color: var(--text-primary);
     }
 
     /* ==========================================================================
@@ -945,13 +991,34 @@
       <main class="main-content">
         <!-- Firebase Admin Auth Status Bar -->
         <div id="authNoticeBar" class="auth-notice">
-          <div>
-            <strong id="authNoticeTitle">Google Admin Sign-In Required for Cloud Writes</strong>
-            <div id="authNoticeDesc">Sign in with your verified studio Google account to publish, edit, or delete data in Firebase Firestore &amp; Storage.</div>
+          <div class="auth-notice-row">
+            <div>
+              <strong id="authNoticeTitle">Google Admin Sign-In Required for Cloud Writes</strong>
+              <div id="authNoticeDesc">Sign in with your verified studio Google account to publish, edit, or delete data in Firebase Firestore &amp; Storage.</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <button type="button" id="toggleDomainHelpBtn" class="btn btn-outline btn-sm hidden">Domain Setup</button>
+              <button type="button" id="googleAuthBannerBtn" class="btn btn-primary btn-sm">Sign in with Google</button>
+              <button type="button" id="googleSignOutBtn" class="btn btn-outline btn-sm hidden">Sign Out</button>
+            </div>
           </div>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <button type="button" id="googleAuthBannerBtn" class="btn btn-primary btn-sm">Sign in with Google</button>
-            <button type="button" id="googleSignOutBtn" class="btn btn-outline btn-sm hidden">Sign Out</button>
+
+          <div id="domainHelpPanel" class="domain-help-panel hidden">
+            <div class="domain-help-text" id="domainHelpText">
+              To allow Google Sign-In on <code id="currentHostBadge" class="domain-code"></code>, add this domain once in Firebase Console under <strong>Authentication &rarr; Settings &rarr; Authorized domains</strong>.
+            </div>
+            <div class="domain-help-actions">
+              <button type="button" id="copyDomainBtn" class="btn btn-outline btn-sm">Copy Domain</button>
+              <a
+                id="openFirebaseAuthSettingsLink"
+                href="https://console.firebase.google.com/project/gen-lang-client-0390672167/authentication/settings"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-dark btn-sm"
+              >
+                Open Firebase Authorized Domains
+              </a>
+            </div>
           </div>
         </div>
 
@@ -1077,9 +1144,10 @@
                 <div class="form-group" style="margin-top: 12px; margin-bottom: 0;">
                   <label for="prodImageUrlInput" class="form-label">Or Direct Image URL (Optional)</label>
                   <input
-                    type="url"
+                    type="text"
                     id="prodImageUrlInput"
                     class="form-input"
+                    maxlength="1000"
                     placeholder="https://... (auto-filled if uploading file above)"
                   />
                 </div>
@@ -1160,6 +1228,7 @@
                     type="text"
                     id="heroImageUrlInput"
                     class="form-input"
+                    maxlength="1000"
                     placeholder="https://... or ./src/assets/images/..."
                     required
                   />
@@ -1215,6 +1284,7 @@
                   type="url"
                   id="linkPatterns"
                   class="form-input"
+                  maxlength="500"
                   placeholder="https://www.fiverr.com/your-username/seamless-pattern-gig"
                   required
                 />
@@ -1231,6 +1301,7 @@
                   type="url"
                   id="linkMylar"
                   class="form-input"
+                  maxlength="500"
                   placeholder="https://www.fiverr.com/your-username/mylar-bag-packaging-gig"
                   required
                 />
@@ -1365,7 +1436,7 @@
             />
             <div style="flex: 1;">
               <label for="editProdImageUrl" class="form-label" style="font-size: 0.8125rem;">Image URL</label>
-              <input type="text" id="editProdImageUrl" class="form-input" required />
+              <input type="text" id="editProdImageUrl" class="form-input" maxlength="1000" required />
             </div>
           </div>
         </div>
@@ -1414,6 +1485,7 @@
       getFirestore,
       collection,
       doc,
+      getDoc,
       getDocFromServer,
       setDoc,
       updateDoc,
@@ -1500,6 +1572,18 @@
     const PIN_STORAGE_KEY = 'dilan_studio_pin_hash_v1';
     const SESSION_UNLOCKED_KEY = 'dilan_studio_session_unlocked';
     const DEFAULT_PIN = '1234';
+    const ADMIN_PRIMARY_EMAIL = 'dilanytwon@gmail.com';
+    const FALLBACK_THUMB_SVG =
+      'data:image/svg+xml;charset=UTF-8,' +
+      encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="160" height="120" viewBox="0 0 160 120">' +
+        '<rect width="160" height="120" fill="#f1f5f9"/>' +
+        '<rect x="52" y="34" width="56" height="40" rx="6" fill="none" stroke="#94a3b8" stroke-width="2.5"/>' +
+        '<circle cx="67" cy="48" r="4" fill="#94a3b8"/>' +
+        '<path d="M58 68l16-14 11 10 9-8 10 12" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+        '<text x="80" y="96" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#64748b">Dilan Studio</text>' +
+        '</svg>'
+      );
 
     const DEFAULT_SETTINGS = {
       patternsGigUrl: 'https://www.fiverr.com/search/gigs?query=seamless%20pattern%20design',
@@ -1576,6 +1660,7 @@
        --------------------------------------------------------------------- */
     const state = {
       user: null,
+      isAuthorizedAdmin: false,
       activeSection: 'catalog',
       adminFilter: 'all',
       adminSearch: '',
@@ -1599,9 +1684,15 @@
       googleAuthTopBtn: document.getElementById('googleAuthTopBtn'),
       googleAuthBannerBtn: document.getElementById('googleAuthBannerBtn'),
       googleSignOutBtn: document.getElementById('googleSignOutBtn'),
+      toggleDomainHelpBtn: document.getElementById('toggleDomainHelpBtn'),
       authNoticeBar: document.getElementById('authNoticeBar'),
       authNoticeTitle: document.getElementById('authNoticeTitle'),
       authNoticeDesc: document.getElementById('authNoticeDesc'),
+      domainHelpPanel: document.getElementById('domainHelpPanel'),
+      domainHelpText: document.getElementById('domainHelpText'),
+      currentHostBadge: document.getElementById('currentHostBadge'),
+      copyDomainBtn: document.getElementById('copyDomainBtn'),
+      openFirebaseAuthSettingsLink: document.getElementById('openFirebaseAuthSettingsLink'),
 
       sidebarLinks: document.querySelectorAll('.sidebar-link[data-section]'),
       breadcrumbSection: document.getElementById('breadcrumbSection'),
@@ -1787,34 +1878,143 @@
     }
 
     /* ---------------------------------------------------------------------
-       8. GOOGLE ADMIN AUTHENTICATION & PIN LOCK
+       8. GOOGLE ADMIN AUTHENTICATION, DOMAIN HELP & PIN LOCK
        --------------------------------------------------------------------- */
+    function isStandardFirebaseOrLocalHost(hostname) {
+      if (!hostname) return false;
+      return (
+        hostname === 'localhost' ||
+        hostname === '127.0.0.1' ||
+        hostname.endsWith('.firebaseapp.com') ||
+        hostname.endsWith('.web.app') ||
+        hostname.endsWith('.run.app')
+      );
+    }
+
+    function configureDomainHelperUI() {
+      const host = window.location.hostname;
+      const authSettingsUrl = 'https://console.firebase.google.com/project/' + firebaseConfig.projectId + '/authentication/settings';
+      els.openFirebaseAuthSettingsLink.href = authSettingsUrl;
+
+      if (window.location.protocol === 'file:') {
+        els.currentHostBadge.textContent = 'dilanytwon-web.github.io';
+        els.copyDomainBtn.classList.add('hidden');
+      } else {
+        els.currentHostBadge.textContent = host || 'your-domain';
+        els.copyDomainBtn.classList.remove('hidden');
+      }
+    }
+    configureDomainHelperUI();
+
+    function showUnauthorizedDomainHelp() {
+      const host = window.location.hostname || 'dilanytwon-web.github.io';
+      els.authNoticeBar.classList.remove('is-authenticated');
+      els.authNoticeBar.classList.add('is-error');
+      els.authNoticeTitle.textContent = 'Domain Authorization Needed: ' + host;
+      els.authNoticeDesc.textContent =
+        'Firebase Auth blocked Google Sign-In because "' + host + '" is not yet listed under Authorized Domains in your Firebase project.';
+      els.currentHostBadge.textContent = host;
+      els.domainHelpText.innerHTML =
+        'Copy <code class="domain-code">' + host + '</code> and add it in Firebase Console &rarr; <strong>Authentication &rarr; Settings &rarr; Authorized domains &rarr; Add domain</strong>, then click Sign in with Google again.';
+      els.domainHelpPanel.classList.remove('hidden');
+    }
+
+    els.copyDomainBtn.addEventListener('click', async () => {
+      const host = window.location.hostname || 'dilanytwon-web.github.io';
+      try {
+        await navigator.clipboard.writeText(host);
+        showToast('Copied "' + host + '" to clipboard.', 'success');
+      } catch (e) {
+        showToast('Domain: ' + host, 'success');
+      }
+    });
+
+    els.toggleDomainHelpBtn.addEventListener('click', () => {
+      els.domainHelpPanel.classList.toggle('hidden');
+    });
+
+    async function checkIsAdminUser(user) {
+      if (!user || !user.emailVerified) return false;
+      if (user.email === ADMIN_PRIMARY_EMAIL) return true;
+      try {
+        const adminDoc = await getDoc(doc(db, 'admins', user.uid));
+        return adminDoc.exists();
+      } catch (e) {
+        return false;
+      }
+    }
+
     async function triggerGoogleSignIn() {
+      if (window.location.protocol === 'file:') {
+        els.authNoticeBar.classList.add('is-error');
+        els.domainHelpPanel.classList.remove('hidden');
+        showToast('Cannot sign in from file://. Open your GitHub Pages admin URL (https://dilanytwon-web.github.io/dilan-studio/admin.html).', 'error');
+        return;
+      }
       const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: 'select_account' });
       try {
         await signInWithPopup(auth, provider);
         showToast('Signed in with Google Admin account.', 'success');
       } catch (err) {
-        showToast(err.message || 'Google sign-in failed.', 'error');
+        const code = err && err.code ? err.code : '';
+        if (code === 'auth/unauthorized-domain') {
+          showUnauthorizedDomainHelp();
+          showToast('Add "' + window.location.hostname + '" to Firebase Authorized Domains (see banner above).', 'error');
+        } else if (code === 'auth/popup-blocked') {
+          showToast('Sign-in popup was blocked by your browser. Please allow popups for this site and try again.', 'error');
+        } else if (code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') {
+          showToast('Google sign-in popup was closed before completing.', 'error');
+        } else {
+          showToast((err && err.message) || 'Google sign-in failed.', 'error');
+        }
       }
     }
 
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       state.user = user;
+      state.isAuthorizedAdmin = false;
+
       if (user) {
-        els.authNoticeBar.classList.add('is-authenticated');
-        els.authNoticeTitle.textContent = 'Connected to Firebase as ' + (user.email || user.uid);
-        els.authNoticeDesc.textContent = 'All product prices, hero banner updates, and Fiverr links save directly to Firestore.';
+        const isAdmin = await checkIsAdminUser(user);
+        state.isAuthorizedAdmin = isAdmin;
+
         els.googleAuthBannerBtn.classList.add('hidden');
         els.googleAuthTopBtn.classList.add('hidden');
+        els.toggleDomainHelpBtn.classList.add('hidden');
         els.googleSignOutBtn.classList.remove('hidden');
+        els.domainHelpPanel.classList.add('hidden');
+
+        if (isAdmin) {
+          els.authNoticeBar.classList.remove('is-error');
+          els.authNoticeBar.classList.add('is-authenticated');
+          els.authNoticeTitle.textContent = 'Connected to Firebase as ' + (user.email || user.uid);
+          els.authNoticeDesc.textContent = 'All product prices, hero banner updates, and Fiverr links save directly to Firestore.';
+        } else {
+          els.authNoticeBar.classList.remove('is-authenticated');
+          els.authNoticeBar.classList.add('is-error');
+          els.authNoticeTitle.textContent = 'Wrong Google Account (' + (user.email || user.uid) + ')';
+          els.authNoticeDesc.textContent =
+            'Firestore security rules only permit admin writes from ' + ADMIN_PRIMARY_EMAIL + '. Click Sign Out and sign in with your studio Google account.';
+        }
       } else {
-        els.authNoticeBar.classList.remove('is-authenticated');
-        els.authNoticeTitle.textContent = 'Google Admin Sign-In Required for Cloud Writes';
-        els.authNoticeDesc.textContent = 'Sign in with your verified studio Google account to publish, edit, or delete data in Firebase Firestore & Storage.';
+        els.authNoticeBar.classList.remove('is-authenticated', 'is-error');
         els.googleAuthBannerBtn.classList.remove('hidden');
         els.googleAuthTopBtn.classList.remove('hidden');
         els.googleSignOutBtn.classList.add('hidden');
+
+        if (window.location.protocol === 'file:') {
+          els.authNoticeTitle.textContent = 'Local File Mode Detected (file://)';
+          els.authNoticeDesc.textContent = 'Firebase Google Sign-In does not work on file://. Open your hosted GitHub Pages admin.html URL instead.';
+          els.toggleDomainHelpBtn.classList.add('hidden');
+          els.domainHelpPanel.classList.remove('hidden');
+        } else {
+          els.authNoticeTitle.textContent = 'Google Admin Sign-In Required for Cloud Writes';
+          els.authNoticeDesc.textContent = 'Sign in with ' + ADMIN_PRIMARY_EMAIL + ' to publish, edit, or delete data in Firebase Firestore & Storage.';
+          const isExternalHost = !isStandardFirebaseOrLocalHost(window.location.hostname);
+          els.toggleDomainHelpBtn.classList.toggle('hidden', !isExternalHost);
+          els.domainHelpPanel.classList.add('hidden');
+        }
       }
     });
 
@@ -1828,6 +2028,10 @@
     function requireAuthenticatedAdmin() {
       if (!state.user) {
         showToast('Please sign in with Google (Admin) first to write to Firebase.', 'error');
+        return false;
+      }
+      if (!state.isAuthorizedAdmin) {
+        showToast('Signed in as ' + (state.user.email || 'unknown') + '. Please sign in with ' + ADMIN_PRIMARY_EMAIL + ' to save changes.', 'error');
         return false;
       }
       return true;
@@ -1934,8 +2138,21 @@
       els.linkPatterns.value = state.settings.patternsGigUrl;
       els.linkMylar.value = state.settings.mylarGigUrl;
       els.heroImageUrlInput.value = state.settings.heroImageUrl;
+      els.heroPreviewImg.referrerPolicy = 'no-referrer';
       els.heroPreviewImg.src = state.settings.heroImageUrl || DEFAULT_SETTINGS.heroImageUrl;
     }
+
+    els.heroPreviewImg.addEventListener('error', () => {
+      if (els.heroPreviewImg.src !== FALLBACK_THUMB_SVG) {
+        els.heroPreviewImg.src = FALLBACK_THUMB_SVG;
+      }
+    });
+
+    els.editPreviewImg.addEventListener('error', () => {
+      if (els.editPreviewImg.src !== FALLBACK_THUMB_SVG) {
+        els.editPreviewImg.src = FALLBACK_THUMB_SVG;
+      }
+    });
 
     function renderCatalogTable() {
       const patternCount = state.catalog.filter((i) => i.category === 'Seamless Patterns').length;
@@ -1992,8 +2209,14 @@
         tdThumb.className = 'thumb-cell';
         const img = document.createElement('img');
         img.className = 'row-thumb';
-        img.src = item.imageUrl;
+        img.referrerPolicy = 'no-referrer';
+        img.src = item.imageUrl || FALLBACK_THUMB_SVG;
         img.alt = item.title;
+        img.addEventListener('error', () => {
+          if (img.src !== FALLBACK_THUMB_SVG) {
+            img.src = FALLBACK_THUMB_SVG;
+          }
+        });
         tdThumb.appendChild(img);
 
         // Title & SEO Alt
@@ -2517,6 +2740,13 @@
       const fn = state.pendingConfirmAction;
       closeConfirmModal();
       if (typeof fn === 'function') await fn();
+    });
+
+    els.editModal.addEventListener('click', (e) => {
+      if (e.target === els.editModal) closeEditModal();
+    });
+    els.confirmModal.addEventListener('click', (e) => {
+      if (e.target === els.confirmModal) closeConfirmModal();
     });
 
     document.addEventListener('keydown', (e) => {

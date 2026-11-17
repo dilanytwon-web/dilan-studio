@@ -1826,8 +1826,24 @@
       renderPortfolio();
     }
 
+    const LIGHTBOX_FALLBACK_SVG =
+      'data:image/svg+xml;charset=UTF-8,' +
+      encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">' +
+        '<rect width="800" height="600" fill="#f1f5f9"/>' +
+        '<text x="400" y="295" text-anchor="middle" font-family="sans-serif" font-size="24" font-weight="600" fill="#0f172a">Dilan Studio</text>' +
+        '<text x="400" y="330" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#64748b">Design Preview Unavailable</text>' +
+        '</svg>'
+      );
+
+    els.lightboxImage.addEventListener('error', () => {
+      if (els.lightboxImage.src !== LIGHTBOX_FALLBACK_SVG) {
+        els.lightboxImage.src = LIGHTBOX_FALLBACK_SVG;
+      }
+    });
+
     function openLightbox(item, imgSrc, categoryUrl) {
-      els.lightboxImage.src = imgSrc;
+      els.lightboxImage.src = imgSrc || LIGHTBOX_FALLBACK_SVG;
       els.lightboxImage.alt = item.alt || item.title;
       els.lightboxCategory.textContent = item.category;
       els.lightboxSpec.textContent = getCategorySpecLabel(item.category);
