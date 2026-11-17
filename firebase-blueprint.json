@@ -1,0 +1,134 @@
+{
+  "entities": {
+    "SiteSettings": {
+      "title": "SiteSettings",
+      "description": "Global storefront configuration for Dilan Studio including master Fiverr category links and the homepage hero showcase image.",
+      "type": "object",
+      "properties": {
+        "patternsGigUrl": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 500,
+          "pattern": "^https?://.+$",
+          "description": "Master Fiverr Gig URL applied to all Seamless Patterns products."
+        },
+        "mylarGigUrl": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 500,
+          "pattern": "^https?://.+$",
+          "description": "Master Fiverr Gig URL applied to all Mylar Bags products."
+        },
+        "heroImageUrl": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000,
+          "description": "Public URL of the homepage hero showcase banner image."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of the last settings update."
+        },
+        "updatedBy": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "description": "UID of the admin user who updated the settings."
+        }
+      },
+      "required": ["patternsGigUrl", "mylarGigUrl", "heroImageUrl", "updatedAt", "updatedBy"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "A portfolio design item showcased on Dilan Studio under Seamless Patterns or Mylar Bags.",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 140,
+          "description": "Display title of the design."
+        },
+        "category": {
+          "type": "string",
+          "enum": ["Seamless Patterns", "Mylar Bags"],
+          "description": "Parent category determining which master Fiverr Gig URL is used."
+        },
+        "price": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 24,
+          "description": "Display price string (e.g., $25)."
+        },
+        "alt": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300,
+          "description": "SEO-optimized image alt text."
+        },
+        "imageUrl": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000,
+          "description": "Firebase Storage download URL or studio asset path."
+        },
+        "storagePath": {
+          "type": "string",
+          "maxLength": 300,
+          "description": "Optional Firebase Storage object path for cleanup on deletion."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Immutable server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of last update."
+        },
+        "createdBy": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "description": "Immutable UID of the admin who created this product."
+        }
+      },
+      "required": ["title", "category", "price", "alt", "imageUrl", "createdAt", "updatedAt", "createdBy"]
+    },
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Registry of authorized Dilan Studio administrators.",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 254,
+          "description": "Admin email address."
+        },
+        "role": {
+          "type": "string",
+          "enum": ["admin"],
+          "description": "Admin role marker."
+        }
+      },
+      "required": ["email", "role"]
+    }
+  },
+  "firestore": {
+    "/siteSettings/{settingId}": {
+      "schema": { "$ref": "#/entities/SiteSettings" },
+      "description": "Public storefront configuration document (`public`) storing master Fiverr category links and hero image URL."
+    },
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Portfolio design products publicly visible on the showcase and managed by admins."
+    },
+    "/admins/{userId}": {
+      "schema": { "$ref": "#/entities/AdminUser" },
+      "description": "Authorized admin users for Dilan Studio."
+    }
+  }
+}

@@ -1,0 +1,1962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary SEO Meta Tags -->
+  <title>Dilan Studio – Seamless Patterns &amp; Mylar Packaging Design</title>
+  <meta
+    name="description"
+    content="Explore print-ready seamless surface patterns and custom Mylar bag packaging designs by Dilan Studio. Commission custom artwork directly on Fiverr."
+  />
+  <meta
+    name="keywords"
+    content="Seamless Surface Patterns, Custom Mylar Bag Packaging Design, Surface Pattern Designer, Mylar Pouch Designer, Repeat Textile Patterns, Print-Ready Packaging Design, Dilan Studio"
+  />
+  <meta name="author" content="Dilan Studio" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph / Social Share Metadata -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Dilan Studio" />
+  <meta property="og:title" content="Dilan Studio – Seamless Patterns &amp; Mylar Packaging Design" />
+  <meta
+    property="og:description"
+    content="Explore print-ready seamless surface patterns and custom Mylar bag packaging designs by Dilan Studio. Commission custom artwork directly on Fiverr."
+  />
+
+  <!-- Twitter / X Card Metadata -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Dilan Studio – Seamless Patterns &amp; Mylar Packaging Design" />
+  <meta
+    name="twitter:description"
+    content="Explore print-ready seamless surface patterns and custom Mylar bag packaging designs by Dilan Studio. Commission custom artwork directly on Fiverr."
+  />
+
+  <!-- Dynamic Canonical & OG URL Resolution -->
+  <script>
+    (function () {
+      var canonicalUrl = window.location.origin !== 'null'
+        ? window.location.origin + window.location.pathname
+        : window.location.href;
+      var canonicalLink = document.createElement('link');
+      canonicalLink.rel = 'canonical';
+      canonicalLink.href = canonicalUrl;
+      document.head.appendChild(canonicalLink);
+
+      var ogUrl = document.createElement('meta');
+      ogUrl.setAttribute('property', 'og:url');
+      ogUrl.content = canonicalUrl;
+      document.head.appendChild(ogUrl);
+    })();
+  </script>
+
+  <!-- Schema.org Structured Data (JSON-LD) for Rich Search Results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "DesignAgency",
+    "name": "Dilan Studio",
+    "description": "Digital design studio specializing in commercial Seamless Surface Patterns and Custom Mylar Bag Packaging Design.",
+    "knowsAbout": [
+      "Seamless Surface Patterns",
+      "Textile Repeat Design",
+      "Custom Mylar Bag Packaging Design",
+      "Die-Line Pouch Artwork",
+      "Print-Ready Packaging Illustration"
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Dilan Studio Digital Design Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Seamless Surface Patterns",
+            "description": "High-resolution 300 DPI seamless repeat pattern designs for textiles, apparel, wallpaper, and stationery with full source files."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Custom Mylar Bag Packaging Design",
+            "description": "Print-ready stand-up Mylar pouch and barrier bag artwork tailored to exact manufacturer die-lines, matte/holo finishes, and retail compliance."
+          }
+        }
+      ]
+    }
+  }
+  </script>
+
+  <!-- Curated Editorial Typography: Bricolage Grotesque + Plus Jakarta Sans + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ==========================================================================
+       DILAN STUDIO — DESIGN TOKENS & BASE RESET
+       ========================================================================== */
+    :root {
+      --bg-canvas: #ffffff;
+      --bg-subtle: #f8fafc;
+      --bg-muted: #f1f5f9;
+      --surface-card: #ffffff;
+      --border-hairline: #e2e8f0;
+      --border-strong: #cbd5e1;
+
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+
+      --accent-primary: #1d4ed8;
+      --accent-primary-hover: #1e40af;
+      --accent-surface: #eff6ff;
+
+      --ink-button: #0f172a;
+      --ink-button-hover: #1e293b;
+
+      --font-display: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --container-max: 1240px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background-color: var(--bg-canvas);
+      overflow-x: hidden;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent-primary);
+      outline-offset: 2px;
+    }
+
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    /* ==========================================================================
+       HEADER — 3-ZONE TOP BAR CONTRACT
+       ========================================================================== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background-color: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-hairline);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      min-height: 68px;
+    }
+
+    .brand-wordmark {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .primary-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-link {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      flex-shrink: 0;
+      padding: 6px 0;
+      border-bottom: 1.5px solid transparent;
+      transition: color 160ms var(--ease-out-expo), border-color 160ms var(--ease-out-expo);
+    }
+
+    .nav-link:hover {
+      color: var(--text-primary);
+      border-bottom-color: var(--text-primary);
+    }
+
+    .header-action-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .header-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 8px 18px;
+      border-radius: var(--radius-sm);
+      background-color: var(--ink-button);
+      color: #ffffff;
+      font-size: 0.875rem;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background-color 160ms var(--ease-out-expo), transform 160ms var(--ease-out-expo);
+    }
+
+    .header-cta:hover {
+      background-color: var(--ink-button-hover);
+      transform: translateY(-1px);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-hairline);
+      color: var(--text-primary);
+    }
+
+    .mobile-drawer {
+      display: none;
+      padding: 16px 24px 20px;
+      border-top: 1px solid var(--border-hairline);
+      background-color: var(--bg-canvas);
+    }
+
+    .mobile-drawer.is-open {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .mobile-drawer .nav-link {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--bg-muted);
+    }
+
+    /* ==========================================================================
+       HERO SECTION — EDITORIAL 2-COLUMN SPLIT + SPECIFICATIONS STRIP
+       ========================================================================== */
+    .hero-section {
+      padding: 56px 0 48px;
+      background-color: var(--bg-canvas);
+      border-bottom: 1px solid var(--border-hairline);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 48px;
+      align-items: stretch;
+    }
+
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8px 0;
+    }
+
+    .hero-kicker {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--accent-primary);
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.25rem, 4vw, 3.35rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      text-wrap: balance;
+      max-width: 18ch;
+      margin-bottom: 20px;
+    }
+
+    .hero-lead {
+      font-size: 1.0625rem;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      max-width: 54ch;
+      margin-bottom: 32px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-primary-cobalt {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 46px;
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      background-color: var(--accent-primary);
+      color: #ffffff;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background-color 160ms var(--ease-out-expo), transform 160ms var(--ease-out-expo);
+    }
+
+    .btn-primary-cobalt:hover {
+      background-color: var(--accent-primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 12px 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      color: var(--text-primary);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background-color 160ms var(--ease-out-expo), border-color 160ms var(--ease-out-expo);
+    }
+
+    .btn-ghost-link:hover {
+      background-color: var(--bg-subtle);
+      border-color: var(--text-primary);
+    }
+
+    .hero-media-frame {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-hairline);
+      background-color: var(--bg-muted);
+      min-height: 360px;
+      height: 100%;
+    }
+
+    .hero-media-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Full-width 4-Column Studio Specifications Strip below hero split */
+    .specs-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 24px;
+      margin-top: 44px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border-hairline);
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .spec-value {
+      font-family: var(--font-mono);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .spec-label {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       PORTFOLIO SHOWCASE & CATEGORY FILTER BAR
+       ========================================================================== */
+    .portfolio-section {
+      padding: 64px 0 80px;
+      background-color: var(--bg-subtle);
+    }
+
+    .portfolio-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 2.8vw, 2.25rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+      text-wrap: balance;
+    }
+
+    .section-subtitle {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      margin-top: 6px;
+      max-width: 58ch;
+    }
+
+    .toolbar-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .filter-tabs {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      padding: 5px;
+      background-color: var(--bg-muted);
+      border: 1px solid var(--border-hairline);
+      border-radius: 10px;
+    }
+
+    .filter-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 8px 16px;
+      border-radius: 7px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background-color 160ms var(--ease-out-expo), color 160ms var(--ease-out-expo), box-shadow 160ms var(--ease-out-expo);
+    }
+
+    .filter-tab:hover {
+      color: var(--text-primary);
+    }
+
+    .filter-tab.is-active {
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+
+    .filter-count {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .filter-tab.is-active .filter-count {
+      color: var(--accent-primary);
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1 1 260px;
+      max-width: 340px;
+    }
+
+    .search-input {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 14px 10px 40px;
+      border-radius: 10px;
+      border: 1px solid var(--border-hairline);
+      background-color: var(--bg-canvas);
+      font-family: inherit;
+      font-size: 0.9375rem;
+      color: var(--text-primary);
+      transition: border-color 160ms var(--ease-out-expo);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    /* Responsive Product Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 28px;
+    }
+
+    .design-card {
+      display: flex;
+      flex-direction: column;
+      background-color: var(--surface-card);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: transform 200ms var(--ease-out-expo), border-color 200ms var(--ease-out-expo);
+    }
+
+    .design-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--border-strong);
+    }
+
+    .card-media-btn {
+      position: relative;
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background-color: var(--bg-muted);
+      overflow: hidden;
+      padding: 0;
+      text-align: left;
+    }
+
+    .card-media-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 280ms var(--ease-out-expo);
+    }
+
+    .design-card:hover .card-media-btn img {
+      transform: scale(1.03);
+    }
+
+    .card-zoom-hint {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background-color: rgba(15, 23, 42, 0.78);
+      color: #ffffff;
+      opacity: 0;
+      transition: opacity 160ms var(--ease-out-expo);
+    }
+
+    .design-card:hover .card-zoom-hint,
+    .card-media-btn:focus-visible .card-zoom-hint {
+      opacity: 1;
+    }
+
+    .image-fallback {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      height: 100%;
+      padding: 24px;
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      color: var(--text-secondary);
+      text-align: center;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 20px 22px 22px;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--accent-primary);
+      margin-bottom: 8px;
+    }
+
+    .card-meta-sep {
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .card-meta-spec {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Title + Clean Price Row above CTA buttons */
+    .card-title-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: -0.015em;
+      color: var(--text-primary);
+      text-wrap: balance;
+    }
+
+    .card-price {
+      font-family: var(--font-mono);
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+
+    .card-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .btn-order-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 18px;
+      border-radius: var(--radius-sm);
+      background-color: var(--ink-button);
+      color: #ffffff;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: background-color 160ms var(--ease-out-expo);
+    }
+
+    .btn-order-primary:hover {
+      background-color: var(--accent-primary);
+    }
+
+    .btn-order-custom {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-align: center;
+      transition: border-color 160ms var(--ease-out-expo), background-color 160ms var(--ease-out-expo), color 160ms var(--ease-out-expo);
+    }
+
+    .btn-order-custom:hover {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+      background-color: var(--accent-surface);
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      padding: 56px 24px;
+      text-align: center;
+      background-color: var(--bg-canvas);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-lg);
+    }
+
+    .empty-state h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      margin-bottom: 8px;
+    }
+
+    .empty-state p {
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    /* Loading Skeletons */
+    .skeleton-card {
+      background-color: var(--surface-card);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .skeleton-media {
+      aspect-ratio: 4 / 3;
+      background-color: var(--bg-muted);
+    }
+
+    .skeleton-body {
+      padding: 20px 22px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .skeleton-line {
+      height: 16px;
+      border-radius: 6px;
+      background-color: var(--bg-muted);
+    }
+
+    /* ==========================================================================
+       CAPABILITIES & SPECIALTIES SECTION
+       ========================================================================== */
+    .services-section {
+      padding: 72px 0;
+      background-color: var(--bg-canvas);
+      border-top: 1px solid var(--border-hairline);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 32px;
+      margin-top: 36px;
+    }
+
+    .service-panel {
+      padding: 32px;
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-lg);
+      background-color: var(--bg-subtle);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .service-index {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--accent-primary);
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .service-panel h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .service-panel p {
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .service-specs-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-hairline);
+      font-size: 0.9375rem;
+      color: var(--text-primary);
+    }
+
+    .service-specs-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .service-specs-list li::before {
+      content: '—';
+      color: var(--accent-primary);
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    .site-footer {
+      padding: 40px 0;
+      background-color: var(--bg-canvas);
+      border-top: 1px solid var(--border-hairline);
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .footer-note {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 24px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .footer-links a:hover {
+      color: var(--text-primary);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* ==========================================================================
+       LIGHTBOX MODAL
+       ========================================================================== */
+    .lightbox-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background-color: rgba(15, 23, 42, 0.82);
+      backdrop-filter: blur(4px);
+    }
+
+    .lightbox-backdrop.is-open {
+      display: flex;
+    }
+
+    .lightbox-dialog {
+      position: relative;
+      width: 100%;
+      max-width: 960px;
+      max-height: 92vh;
+      overflow-y: auto;
+      background-color: var(--bg-canvas);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-hairline);
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    }
+
+    .lightbox-media {
+      background-color: var(--bg-muted);
+      min-height: 320px;
+    }
+
+    .lightbox-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .lightbox-info {
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .lightbox-price {
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--accent-primary);
+      margin-bottom: 10px;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #ffffff;
+      color: var(--text-primary);
+      border: 1px solid var(--border-hairline);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.14);
+      font-size: 1.125rem;
+      line-height: 1;
+    }
+
+    .lightbox-close:hover {
+      background-color: var(--bg-muted);
+    }
+
+    /* ==========================================================================
+       RESPONSIVE BREAKPOINTS
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .hero-media-frame {
+        min-height: 300px;
+        aspect-ratio: 16 / 10;
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .specs-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .lightbox-dialog {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .primary-nav,
+      .header-cta {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: inline-flex;
+      }
+
+      .hero-section {
+        padding: 36px 0 36px;
+      }
+
+      .portfolio-section {
+        padding: 48px 0 64px;
+      }
+
+      .product-grid,
+      .services-grid,
+      .specs-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-tabs {
+        width: 100%;
+      }
+
+      .filter-tab {
+        flex: 1 1 auto;
+        justify-content: center;
+      }
+
+      .search-box {
+        max-width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =====================================================================
+       HEADER: Clean 3-Zone Top Bar (Brand | Nav Links | Primary Action)
+       ===================================================================== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top" class="brand-wordmark">Dilan Studio</a>
+
+      <nav class="primary-nav" aria-label="Primary Navigation">
+        <a href="#portfolio" class="nav-link" data-nav-filter="all">Portfolio</a>
+        <a href="#portfolio" class="nav-link" data-nav-filter="Seamless Patterns">Seamless Patterns</a>
+        <a href="#portfolio" class="nav-link" data-nav-filter="Mylar Bags">Mylar Bags</a>
+        <a href="#services" class="nav-link">Capabilities</a>
+      </nav>
+
+      <div class="header-action-group">
+        <a href="#portfolio" class="header-cta">Order Custom Design</a>
+        <button
+          type="button"
+          class="mobile-menu-btn"
+          id="mobileMenuToggle"
+          aria-expanded="false"
+          aria-controls="mobileDrawer"
+          aria-label="Toggle navigation menu"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <nav id="mobileDrawer" class="mobile-drawer" aria-label="Mobile Navigation">
+      <a href="#portfolio" class="nav-link" data-nav-filter="all">All Designs</a>
+      <a href="#portfolio" class="nav-link" data-nav-filter="Seamless Patterns">Seamless Patterns</a>
+      <a href="#portfolio" class="nav-link" data-nav-filter="Mylar Bags">Mylar Bags &amp; Packaging</a>
+      <a href="#services" class="nav-link">Design Capabilities</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- =====================================================================
+         HERO SPLIT SECTION (Hero Image dynamically synced from Firestore)
+         ===================================================================== -->
+    <section class="hero-section" aria-labelledby="hero-heading">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="hero-kicker">Seamless Surface Patterns · Custom Mylar Packaging Design</p>
+            <h1 id="hero-heading" class="hero-title">
+              Print-ready surface patterns and standout Mylar packaging.
+            </h1>
+            <p class="hero-lead">
+              Dilan Studio crafts commercial seamless repeat patterns for textiles and home goods alongside
+              production-ready custom Mylar bag packaging engineered for retail shelves and brand launches.
+            </p>
+            <div class="hero-actions">
+              <a href="#portfolio" class="btn-primary-cobalt">Explore Design Catalog</a>
+              <a href="#services" class="btn-ghost-link">View Print Specifications</a>
+            </div>
+          </div>
+
+          <div class="hero-media-frame">
+            <img
+              id="heroBannerImg"
+              src="./src/assets/images/hero_dilan_studio_1794896084865.jpg"
+              alt="Dilan Studio desk showcasing printed matte holographic Mylar stand-up pouches and seamless botanical surface pattern swatches"
+              referrerpolicy="no-referrer"
+            />
+            <div id="heroBannerFallback" class="image-fallback">
+              <span>Dilan Studio</span>
+              <span style="font-weight: 400; color: var(--text-muted);">Seamless Surface Patterns &amp; Mylar Bag Packaging</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-Column Studio Deliverables Strip -->
+        <div class="specs-strip" aria-label="Production Specifications">
+          <div class="spec-item">
+            <span class="spec-value tabular-nums">300 DPI CMYK</span>
+            <span class="spec-label">Press-verified color separation</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-value">AI · EPS · PSD · PNG</span>
+            <span class="spec-label">Editable layered source files</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-value">Custom Die-Lines</span>
+            <span class="spec-label">Exact pouch gusset &amp; bleed specs</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-value tabular-nums">100% Commercial</span>
+            <span class="spec-label">Full retail &amp; licensing rights</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         PORTFOLIO SHOWCASE & FILTERABLE PRODUCT GRID
+         ===================================================================== -->
+    <section id="portfolio" class="portfolio-section" aria-labelledby="portfolio-heading">
+      <div class="container">
+        <div class="portfolio-header">
+          <div>
+            <h2 id="portfolio-heading" class="section-title">Selected Design Showcase</h2>
+            <p class="section-subtitle">
+              Filter by Seamless Surface Patterns or Custom Mylar Bag Packaging Design and order directly via Fiverr.
+            </p>
+          </div>
+        </div>
+
+        <div class="toolbar-controls">
+          <!-- Category Filter Tabs -->
+          <div class="filter-tabs" role="tablist" aria-label="Filter designs by category">
+            <button
+              type="button"
+              class="filter-tab is-active"
+              role="tab"
+              aria-selected="true"
+              data-category="all"
+            >
+              <span>All Designs</span>
+              <span class="filter-count tabular-nums" id="count-all">(0)</span>
+            </button>
+            <button
+              type="button"
+              class="filter-tab"
+              role="tab"
+              aria-selected="false"
+              data-category="Seamless Patterns"
+            >
+              <span>Seamless Patterns</span>
+              <span class="filter-count tabular-nums" id="count-patterns">(0)</span>
+            </button>
+            <button
+              type="button"
+              class="filter-tab"
+              role="tab"
+              aria-selected="false"
+              data-category="Mylar Bags"
+            >
+              <span>Mylar Bags</span>
+              <span class="filter-count tabular-nums" id="count-mylar">(0)</span>
+            </button>
+          </div>
+
+          <!-- Search Filter -->
+          <div class="search-box">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input
+              type="search"
+              id="searchInput"
+              class="search-input"
+              placeholder="Search patterns or packaging..."
+              aria-label="Search designs by title or keyword"
+            />
+          </div>
+        </div>
+
+        <!-- Product Cards Grid (Live-synced from Firebase Firestore) -->
+        <div id="productGrid" class="product-grid" aria-live="polite">
+          <div class="skeleton-card" aria-hidden="true">
+            <div class="skeleton-media"></div>
+            <div class="skeleton-body">
+              <div class="skeleton-line" style="width: 55%;"></div>
+              <div class="skeleton-line" style="width: 85%; height: 22px;"></div>
+              <div class="skeleton-line" style="width: 100%; height: 40px;"></div>
+            </div>
+          </div>
+          <div class="skeleton-card" aria-hidden="true">
+            <div class="skeleton-media"></div>
+            <div class="skeleton-body">
+              <div class="skeleton-line" style="width: 55%;"></div>
+              <div class="skeleton-line" style="width: 85%; height: 22px;"></div>
+              <div class="skeleton-line" style="width: 100%; height: 40px;"></div>
+            </div>
+          </div>
+          <div class="skeleton-card" aria-hidden="true">
+            <div class="skeleton-media"></div>
+            <div class="skeleton-body">
+              <div class="skeleton-line" style="width: 55%;"></div>
+              <div class="skeleton-line" style="width: 85%; height: 22px;"></div>
+              <div class="skeleton-line" style="width: 100%; height: 40px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         DESIGN CAPABILITIES SECTION (SEO & CONVERSION SUPPORT)
+         ===================================================================== -->
+    <section id="services" class="services-section" aria-labelledby="services-heading">
+      <div class="container">
+        <h2 id="services-heading" class="section-title">Specialized Design Disciplines</h2>
+        <p class="section-subtitle">
+          Every commission is built from scratch to manufacturer tolerances and commercial licensing standards.
+        </p>
+
+        <div class="services-grid">
+          <article class="service-panel">
+            <div>
+              <p class="service-index tabular-nums">01. Textile &amp; Surface Design</p>
+              <h3>Seamless Surface Patterns</h3>
+              <p>
+                Tileable, zero-seam repeat artwork crafted for apparel fabrics, wallpaper, gift wrap, phone cases,
+                and home decor collections with balanced colorways and crisp vector or raster detail.
+              </p>
+              <ul class="service-specs-list">
+                <li>True half-drop, brick, and square seamless repeats</li>
+                <li>Pantone / CMYK / RGB print-ready files at 300 DPI</li>
+                <li>Layered Adobe Illustrator (AI/EPS) or Photoshop (PSD) sources</li>
+              </ul>
+            </div>
+            <div>
+              <a
+                href="https://www.fiverr.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                id="serviceLinkPatterns"
+                class="btn-primary-cobalt"
+              >
+                Order Seamless Pattern on Fiverr
+              </a>
+            </div>
+          </article>
+
+          <article class="service-panel">
+            <div>
+              <p class="service-index tabular-nums">02. Retail &amp; Pouch Packaging</p>
+              <h3>Custom Mylar Bag Packaging Design</h3>
+              <p>
+                High-impact stand-up pouches, smell-proof barrier bags, and flat gusset packaging designed around
+                your printer die-line—complete with holographic foil masks, spot UV layers, and realistic 3D mockups.
+              </p>
+              <ul class="service-specs-list">
+                <li>Tailored to exact 3.5g, 7g, 28g, or custom manufacturer die-lines</li>
+                <li>Dedicated metallic, holographic, and matte varnish foil spot plates</li>
+                <li>Photorealistic 3D bag renders included for e-commerce listings</li>
+              </ul>
+            </div>
+            <div>
+              <a
+                href="https://www.fiverr.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                id="serviceLinkMylar"
+                class="btn-primary-cobalt"
+              >
+                Order Mylar Packaging on Fiverr
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =====================================================================
+       FOOTER
+       ===================================================================== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <span class="footer-brand">Dilan Studio</span>
+        <span class="footer-note"> · &copy; <span id="currentYear">2026</span> Seamless Surface Patterns &amp; Mylar Bag Packaging Design</span>
+      </div>
+
+      <div class="footer-links">
+        <a href="#portfolio" data-nav-filter="Seamless Patterns">Seamless Patterns</a>
+        <a href="#portfolio" data-nav-filter="Mylar Bags">Mylar Bags</a>
+        <a href="admin.html">Studio Admin</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       HIGH-RESOLUTION LIGHTBOX MODAL
+       ===================================================================== -->
+  <div
+    id="lightboxModal"
+    class="lightbox-backdrop"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="lightboxTitle"
+  >
+    <div class="lightbox-dialog">
+      <button type="button" id="lightboxClose" class="lightbox-close" aria-label="Close preview">&times;</button>
+
+      <div class="lightbox-media">
+        <img id="lightboxImage" src="" alt="" referrerpolicy="no-referrer" />
+      </div>
+
+      <div class="lightbox-info">
+        <div>
+          <p class="card-meta">
+            <span id="lightboxCategory">Category</span>
+            <span class="card-meta-sep" aria-hidden="true">&middot;</span>
+            <span class="card-meta-spec" id="lightboxSpec">Print-Ready File</span>
+          </p>
+          <h3 id="lightboxTitle" class="card-title" style="font-size: 1.5rem; margin-bottom: 8px;">Design Title</h3>
+          <p id="lightboxPrice" class="lightbox-price tabular-nums">$25</p>
+          <p id="lightboxAltDesc" style="color: var(--text-secondary); font-size: 0.9375rem;"></p>
+        </div>
+
+        <div class="card-actions">
+          <a
+            id="lightboxOrderBtn"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-order-primary"
+          >
+            Order Now
+          </a>
+          <a
+            id="lightboxCustomBtn"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-order-custom"
+          >
+            Need a Custom Design? Order Here
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       FIREBASE v10 CDN INTEGRATION + REAL-TIME SHOWCASE SCRIPT
+       ===================================================================== -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
+    import {
+      getFirestore,
+      collection,
+      doc,
+      getDocFromServer,
+      onSnapshot,
+      query,
+      where
+    } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+
+    /* ---------------------------------------------------------------------
+       1. FIREBASE CONFIGURATION
+          Replace these credentials with your own Firebase project config
+          from Firebase Console -> Project Settings -> Your Apps if deploying
+          to an external Firebase project.
+       --------------------------------------------------------------------- */
+    const firebaseConfig = {
+      apiKey: "AIzaSyC2N1PN5ewRsMwJtYs52oG3UEBYaLuU44w",
+      authDomain: "gen-lang-client-0390672167.firebaseapp.com",
+      projectId: "gen-lang-client-0390672167",
+      storageBucket: "gen-lang-client-0390672167.firebasestorage.app",
+      messagingSenderId: "462083263085",
+      appId: "1:462083263085:web:e7acee0035b68674f28d64",
+      // Leave empty or remove firestoreDatabaseId if using a standard "(default)" Firestore database:
+      firestoreDatabaseId: "ai-studio-dilanstudio-446b2d0c-8bf4-4264-871e-074eb3137214"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = firebaseConfig.firestoreDatabaseId
+      ? getFirestore(app, firebaseConfig.firestoreDatabaseId)
+      : getFirestore(app);
+
+    /* ---------------------------------------------------------------------
+       2. STRUCTURED FIRESTORE ERROR HANDLER & STARTUP CONNECTION CHECK
+       --------------------------------------------------------------------- */
+    const OperationType = {
+      CREATE: 'create',
+      UPDATE: 'update',
+      DELETE: 'delete',
+      LIST: 'list',
+      GET: 'get',
+      WRITE: 'write'
+    };
+
+    function handleFirestoreError(error, operationType, path) {
+      const errInfo = {
+        error: error instanceof Error ? error.message : String(error),
+        authInfo: { userId: null },
+        operationType: operationType,
+        path: path
+      };
+      console.error('Firestore Error:', JSON.stringify(errInfo));
+    }
+
+    async function testConnection() {
+      try {
+        await getDocFromServer(doc(db, 'test', 'connection'));
+      } catch (error) {
+        if (error instanceof Error && error.message.includes('the client is offline')) {
+          console.error('Firebase client is offline. Please verify firebaseConfig credentials.');
+        }
+      }
+    }
+    testConnection();
+
+    /* ---------------------------------------------------------------------
+       3. FALLBACK DEFAULTS (Displayed cleanly until admin seeds Firestore)
+       --------------------------------------------------------------------- */
+    const DEFAULT_SETTINGS = {
+      patternsGigUrl: 'https://www.fiverr.com/search/gigs?query=seamless%20pattern%20design',
+      mylarGigUrl: 'https://www.fiverr.com/search/gigs?query=mylar%20bag%20packaging%20design',
+      heroImageUrl: './src/assets/images/hero_dilan_studio_1794896084865.jpg'
+    };
+
+    const FALLBACK_CATALOG = [
+      {
+        id: 'ds-pat-001',
+        title: 'Mediterranean Citrus & Olive Botanical Repeat',
+        category: 'Seamless Patterns',
+        price: '$25',
+        alt: 'Mediterranean citrus blossom and olive branch seamless surface pattern swatch on deep slate charcoal textile print',
+        imageUrl: './src/assets/images/pattern_citrus_botanical_1794896083595.jpg',
+        createdAtMs: 1730000001000
+      },
+      {
+        id: 'ds-myl-001',
+        title: 'Botanical Bliss Holographic Stand-Up Mylar Pouch',
+        category: 'Mylar Bags',
+        price: '$45',
+        alt: 'Custom Mylar bag packaging design with matte botanical illustration and holographic foil window on limestone pedestal',
+        imageUrl: './src/assets/images/mylar_iridescent_pouch_1794896085762.jpg',
+        createdAtMs: 1730000002000
+      },
+      {
+        id: 'ds-pat-002',
+        title: 'Modern Arches & Tropical Foliage Seamless Pattern',
+        category: 'Seamless Patterns',
+        price: '$30',
+        alt: 'Mid-century geometric arches and botanical leaves seamless surface pattern design printed on archival cotton paper',
+        imageUrl: './src/assets/images/pattern_midcentury_geo_1794896086156.jpg',
+        createdAtMs: 1730000003000
+      },
+      {
+        id: 'ds-myl-002',
+        title: 'Aether Copper Foil Matte Charcoal Mylar Bag',
+        category: 'Mylar Bags',
+        price: '$55',
+        alt: 'Custom Mylar bag packaging design featuring matte charcoal finish and copper foil emblem for artisan botanicals',
+        imageUrl: './src/assets/images/mylar_artisan_roast_1794896086911.jpg',
+        createdAtMs: 1730000004000
+      }
+    ];
+
+    /* ---------------------------------------------------------------------
+       4. APPLICATION STATE & DOM REFERENCES
+       --------------------------------------------------------------------- */
+    const state = {
+      activeCategory: 'all',
+      searchQuery: '',
+      settings: { ...DEFAULT_SETTINGS },
+      catalog: [...FALLBACK_CATALOG],
+      hasLoadedCloudProducts: false
+    };
+
+    const els = {
+      heroBannerImg: document.getElementById('heroBannerImg'),
+      heroBannerFallback: document.getElementById('heroBannerFallback'),
+      productGrid: document.getElementById('productGrid'),
+      filterTabs: document.querySelectorAll('.filter-tab'),
+      searchInput: document.getElementById('searchInput'),
+      countAll: document.getElementById('count-all'),
+      countPatterns: document.getElementById('count-patterns'),
+      countMylar: document.getElementById('count-mylar'),
+      serviceLinkPatterns: document.getElementById('serviceLinkPatterns'),
+      serviceLinkMylar: document.getElementById('serviceLinkMylar'),
+      mobileMenuToggle: document.getElementById('mobileMenuToggle'),
+      mobileDrawer: document.getElementById('mobileDrawer'),
+      lightboxModal: document.getElementById('lightboxModal'),
+      lightboxClose: document.getElementById('lightboxClose'),
+      lightboxImage: document.getElementById('lightboxImage'),
+      lightboxCategory: document.getElementById('lightboxCategory'),
+      lightboxSpec: document.getElementById('lightboxSpec'),
+      lightboxTitle: document.getElementById('lightboxTitle'),
+      lightboxPrice: document.getElementById('lightboxPrice'),
+      lightboxAltDesc: document.getElementById('lightboxAltDesc'),
+      lightboxOrderBtn: document.getElementById('lightboxOrderBtn'),
+      lightboxCustomBtn: document.getElementById('lightboxCustomBtn')
+    };
+
+    /* ---------------------------------------------------------------------
+       5. HELPERS & RENDERING
+       --------------------------------------------------------------------- */
+    function sanitizeUrl(url) {
+      if (!url || typeof url !== 'string') return 'https://www.fiverr.com/';
+      const trimmed = url.trim();
+      if (/^https?:\/\//i.test(trimmed)) return trimmed;
+      return 'https://' + trimmed;
+    }
+
+    function getFiverrUrlForCategory(category) {
+      if (category === 'Seamless Patterns') {
+        return sanitizeUrl(state.settings.patternsGigUrl || DEFAULT_SETTINGS.patternsGigUrl);
+      }
+      if (category === 'Mylar Bags') {
+        return sanitizeUrl(state.settings.mylarGigUrl || DEFAULT_SETTINGS.mylarGigUrl);
+      }
+      return 'https://www.fiverr.com/';
+    }
+
+    function getCategorySpecLabel(category) {
+      return category === 'Seamless Patterns'
+        ? '300 DPI Seamless Repeat'
+        : 'Print-Ready Die-Line';
+    }
+
+    function formatTimestampMs(ts) {
+      if (!ts) return 0;
+      if (typeof ts.toMillis === 'function') return ts.toMillis();
+      if (typeof ts === 'number') return ts;
+      return 0;
+    }
+
+    function updateDynamicSeoMetadata(category) {
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (category === 'Seamless Patterns') {
+        document.title = 'Seamless Surface Patterns – Dilan Studio';
+        if (metaDesc) {
+          metaDesc.setAttribute('content', 'Browse print-ready seamless surface patterns for textiles, apparel, and wallpaper by Dilan Studio. Order custom patterns on Fiverr.');
+        }
+      } else if (category === 'Mylar Bags') {
+        document.title = 'Custom Mylar Bag Packaging Design – Dilan Studio';
+        if (metaDesc) {
+          metaDesc.setAttribute('content', 'Explore custom Mylar bag packaging designs with die-lines and foil finishes by Dilan Studio. Order custom pouch artwork on Fiverr.');
+        }
+      } else {
+        document.title = 'Dilan Studio – Seamless Patterns & Mylar Packaging Design';
+        if (metaDesc) {
+          metaDesc.setAttribute('content', 'Explore print-ready seamless surface patterns and custom Mylar bag packaging designs by Dilan Studio. Commission custom artwork directly on Fiverr.');
+        }
+      }
+    }
+
+    function applyHeroImage(url) {
+      const targetUrl = (url && url.trim()) ? url.trim() : DEFAULT_SETTINGS.heroImageUrl;
+      els.heroBannerImg.style.display = 'block';
+      els.heroBannerFallback.style.display = 'none';
+      els.heroBannerImg.src = targetUrl;
+    }
+
+    els.heroBannerImg.addEventListener('error', () => {
+      els.heroBannerImg.style.display = 'none';
+      els.heroBannerFallback.style.display = 'flex';
+    });
+
+    function updateCounts() {
+      const total = state.catalog.length;
+      const patterns = state.catalog.filter((i) => i.category === 'Seamless Patterns').length;
+      const mylar = state.catalog.filter((i) => i.category === 'Mylar Bags').length;
+
+      els.countAll.textContent = '(' + total + ')';
+      els.countPatterns.textContent = '(' + patterns + ')';
+      els.countMylar.textContent = '(' + mylar + ')';
+    }
+
+    function updateServiceLinks() {
+      els.serviceLinkPatterns.href = getFiverrUrlForCategory('Seamless Patterns');
+      els.serviceLinkMylar.href = getFiverrUrlForCategory('Mylar Bags');
+    }
+
+    function renderPortfolio() {
+      updateCounts();
+      updateServiceLinks();
+
+      const q = state.searchQuery.trim().toLowerCase();
+      const filtered = state.catalog.filter((item) => {
+        const matchesCategory = state.activeCategory === 'all' || item.category === state.activeCategory;
+        if (!matchesCategory) return false;
+        if (!q) return true;
+        return (
+          item.title.toLowerCase().includes(q) ||
+          item.category.toLowerCase().includes(q) ||
+          (item.price && item.price.toLowerCase().includes(q)) ||
+          (item.alt && item.alt.toLowerCase().includes(q))
+        );
+      });
+
+      els.productGrid.innerHTML = '';
+
+      if (filtered.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'empty-state';
+        const h3 = document.createElement('h3');
+        h3.textContent = 'No matching designs found';
+        const p = document.createElement('p');
+        p.textContent = 'Try switching category tabs or clearing your search filter.';
+        const resetBtn = document.createElement('button');
+        resetBtn.type = 'button';
+        resetBtn.className = 'btn-ghost-link';
+        resetBtn.textContent = 'Show All Designs';
+        resetBtn.addEventListener('click', () => {
+          state.searchQuery = '';
+          els.searchInput.value = '';
+          setCategoryFilter('all');
+        });
+        empty.appendChild(h3);
+        empty.appendChild(p);
+        empty.appendChild(resetBtn);
+        els.productGrid.appendChild(empty);
+        return;
+      }
+
+      const fragment = document.createDocumentFragment();
+
+      filtered.forEach((item) => {
+        const imgSrc = item.imageUrl || '';
+        const categoryUrl = getFiverrUrlForCategory(item.category);
+        const displayPrice = item.price || '$25';
+
+        const card = document.createElement('article');
+        card.className = 'design-card';
+        card.setAttribute('data-category', item.category);
+
+        // Media Button (opens high-res lightbox)
+        const mediaBtn = document.createElement('button');
+        mediaBtn.type = 'button';
+        mediaBtn.className = 'card-media-btn';
+        mediaBtn.setAttribute('aria-label', 'Inspect ' + item.title);
+
+        const img = document.createElement('img');
+        img.src = imgSrc;
+        img.alt = item.alt || (item.title + ' – ' + item.category + ' by Dilan Studio');
+        img.loading = 'lazy';
+        img.setAttribute('referrerpolicy', 'no-referrer');
+
+        const fallback = document.createElement('div');
+        fallback.className = 'image-fallback';
+        const fallbackTitle = document.createElement('span');
+        fallbackTitle.textContent = item.title;
+        const fallbackCat = document.createElement('span');
+        fallbackCat.style.fontWeight = '400';
+        fallbackCat.style.color = 'var(--text-muted)';
+        fallbackCat.textContent = item.category;
+        fallback.appendChild(fallbackTitle);
+        fallback.appendChild(fallbackCat);
+
+        img.addEventListener('error', () => {
+          img.style.display = 'none';
+          fallback.style.display = 'flex';
+        });
+
+        const zoomHint = document.createElement('span');
+        zoomHint.className = 'card-zoom-hint';
+        zoomHint.setAttribute('aria-hidden', 'true');
+        zoomHint.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>';
+
+        mediaBtn.appendChild(img);
+        mediaBtn.appendChild(fallback);
+        mediaBtn.appendChild(zoomHint);
+
+        mediaBtn.addEventListener('click', () => {
+          openLightbox(item, imgSrc, categoryUrl);
+        });
+
+        // Card Body
+        const body = document.createElement('div');
+        body.className = 'card-body';
+
+        // Unboxed Category Metadata Line
+        const meta = document.createElement('p');
+        meta.className = 'card-meta';
+        const catSpan = document.createElement('span');
+        catSpan.textContent = item.category;
+        const sep = document.createElement('span');
+        sep.className = 'card-meta-sep';
+        sep.setAttribute('aria-hidden', 'true');
+        sep.textContent = '·';
+        const specSpan = document.createElement('span');
+        specSpan.className = 'card-meta-spec';
+        specSpan.textContent = getCategorySpecLabel(item.category);
+
+        meta.appendChild(catSpan);
+        meta.appendChild(sep);
+        meta.appendChild(specSpan);
+
+        // Title + Price Row above CTA buttons
+        const titleRow = document.createElement('div');
+        titleRow.className = 'card-title-row';
+
+        const title = document.createElement('h3');
+        title.className = 'card-title';
+        title.textContent = item.title;
+
+        const price = document.createElement('span');
+        price.className = 'card-price tabular-nums';
+        price.textContent = displayPrice;
+
+        titleRow.appendChild(title);
+        titleRow.appendChild(price);
+
+        // Two Distinct Fiverr Redirect CTA Buttons
+        const actions = document.createElement('div');
+        actions.className = 'card-actions';
+
+        const orderNowBtn = document.createElement('a');
+        orderNowBtn.href = categoryUrl;
+        orderNowBtn.target = '_blank';
+        orderNowBtn.rel = 'noopener noreferrer';
+        orderNowBtn.className = 'btn-order-primary';
+        orderNowBtn.textContent = 'Order Now';
+        orderNowBtn.setAttribute('aria-label', 'Order ' + item.title + ' (' + displayPrice + ') on Fiverr');
+
+        const customOrderBtn = document.createElement('a');
+        customOrderBtn.href = categoryUrl;
+        customOrderBtn.target = '_blank';
+        customOrderBtn.rel = 'noopener noreferrer';
+        customOrderBtn.className = 'btn-order-custom';
+        customOrderBtn.textContent = 'Need a Custom Design? Order Here';
+        customOrderBtn.setAttribute('aria-label', 'Commission a custom ' + item.category + ' design on Fiverr');
+
+        actions.appendChild(orderNowBtn);
+        actions.appendChild(customOrderBtn);
+
+        body.appendChild(meta);
+        body.appendChild(titleRow);
+        body.appendChild(actions);
+
+        card.appendChild(mediaBtn);
+        card.appendChild(body);
+        fragment.appendChild(card);
+      });
+
+      els.productGrid.appendChild(fragment);
+    }
+
+    function setCategoryFilter(category) {
+      state.activeCategory = category;
+
+      els.filterTabs.forEach((tab) => {
+        const isSelected = tab.getAttribute('data-category') === category;
+        tab.classList.toggle('is-active', isSelected);
+        tab.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+      });
+
+      updateDynamicSeoMetadata(category);
+      renderPortfolio();
+    }
+
+    function openLightbox(item, imgSrc, categoryUrl) {
+      els.lightboxImage.src = imgSrc;
+      els.lightboxImage.alt = item.alt || item.title;
+      els.lightboxCategory.textContent = item.category;
+      els.lightboxSpec.textContent = getCategorySpecLabel(item.category);
+      els.lightboxTitle.textContent = item.title;
+      els.lightboxPrice.textContent = item.price || '$25';
+      els.lightboxAltDesc.textContent = item.alt || 'Commercial print-ready digital design available for licensing or bespoke adaptation.';
+      els.lightboxOrderBtn.href = categoryUrl;
+      els.lightboxCustomBtn.href = categoryUrl;
+
+      els.lightboxModal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      els.lightboxClose.focus();
+    }
+
+    function closeLightbox() {
+      els.lightboxModal.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+
+    /* ---------------------------------------------------------------------
+       6. FIRESTORE REAL-TIME LISTENERS (siteSettings/public & products)
+       --------------------------------------------------------------------- */
+    function initRealtimeSubscriptions() {
+      const settingsDocRef = doc(db, 'siteSettings', 'public');
+      onSnapshot(
+        settingsDocRef,
+        (snap) => {
+          if (snap.exists()) {
+            const data = snap.data();
+            state.settings = {
+              patternsGigUrl: data.patternsGigUrl || DEFAULT_SETTINGS.patternsGigUrl,
+              mylarGigUrl: data.mylarGigUrl || DEFAULT_SETTINGS.mylarGigUrl,
+              heroImageUrl: data.heroImageUrl || DEFAULT_SETTINGS.heroImageUrl
+            };
+          } else {
+            state.settings = { ...DEFAULT_SETTINGS };
+          }
+          applyHeroImage(state.settings.heroImageUrl);
+          renderPortfolio();
+        },
+        (error) => {
+          handleFirestoreError(error, OperationType.GET, 'siteSettings/public');
+          applyHeroImage(DEFAULT_SETTINGS.heroImageUrl);
+          renderPortfolio();
+        }
+      );
+
+      const productsQuery = query(
+        collection(db, 'products'),
+        where('category', 'in', ['Seamless Patterns', 'Mylar Bags'])
+      );
+
+      onSnapshot(
+        productsQuery,
+        (snapshot) => {
+          const items = [];
+          snapshot.forEach((docSnap) => {
+            const d = docSnap.data();
+            items.push({
+              id: docSnap.id,
+              title: d.title,
+              category: d.category,
+              price: d.price || '$25',
+              alt: d.alt || '',
+              imageUrl: d.imageUrl || '',
+              createdAtMs: formatTimestampMs(d.createdAt)
+            });
+          });
+
+          items.sort((a, b) => b.createdAtMs - a.createdAtMs);
+          state.hasLoadedCloudProducts = true;
+          state.catalog = items.length > 0 ? items : [...FALLBACK_CATALOG];
+          renderPortfolio();
+        },
+        (error) => {
+          handleFirestoreError(error, OperationType.LIST, 'products');
+          if (!state.hasLoadedCloudProducts) {
+            state.catalog = [...FALLBACK_CATALOG];
+            renderPortfolio();
+          }
+        }
+      );
+    }
+
+    /* ---------------------------------------------------------------------
+       7. DOM EVENT LISTENERS
+       --------------------------------------------------------------------- */
+    els.filterTabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        setCategoryFilter(tab.getAttribute('data-category'));
+      });
+    });
+
+    document.querySelectorAll('[data-nav-filter]').forEach((link) => {
+      link.addEventListener('click', () => {
+        const category = link.getAttribute('data-nav-filter');
+        setCategoryFilter(category);
+        if (els.mobileDrawer.classList.contains('is-open')) {
+          els.mobileDrawer.classList.remove('is-open');
+          els.mobileMenuToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    els.searchInput.addEventListener('input', (e) => {
+      state.searchQuery = e.target.value;
+      renderPortfolio();
+    });
+
+    els.mobileMenuToggle.addEventListener('click', () => {
+      const isOpen = els.mobileDrawer.classList.toggle('is-open');
+      els.mobileMenuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    els.lightboxClose.addEventListener('click', closeLightbox);
+    els.lightboxModal.addEventListener('click', (e) => {
+      if (e.target === els.lightboxModal) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && els.lightboxModal.classList.contains('is-open')) {
+        closeLightbox();
+      }
+    });
+
+    const yearEl = document.getElementById('currentYear');
+    if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+    // Start Firestore listeners
+    initRealtimeSubscriptions();
+  </script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global default-deny safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // -------------------------------------------------------------------------
+    // Reusable Hardened Primitives
+    // -------------------------------------------------------------------------
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerifiedUser() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isAdmin() {
+      return isVerifiedUser() && (
+        request.auth.token.email == 'dilanytwon@gmail.com' ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    // -------------------------------------------------------------------------
+    // Validation Blueprints (Synchronized with firebase-blueprint.json)
+    // -------------------------------------------------------------------------
+    function isValidHttpUrl(val, minLen, maxLen) {
+      return val is string &&
+        val.size() >= minLen &&
+        val.size() <= maxLen &&
+        val.matches('^https?://.+$');
+    }
+
+    function isValidSiteSettings(data) {
+      return data.keys().hasAll(['patternsGigUrl', 'mylarGigUrl', 'heroImageUrl', 'updatedAt', 'updatedBy']) &&
+        data.keys().hasOnly(['patternsGigUrl', 'mylarGigUrl', 'heroImageUrl', 'updatedAt', 'updatedBy']) &&
+        isValidHttpUrl(data.patternsGigUrl, 10, 500) &&
+        isValidHttpUrl(data.mylarGigUrl, 10, 500) &&
+        data.heroImageUrl is string && data.heroImageUrl.size() >= 1 && data.heroImageUrl.size() <= 1000 &&
+        data.updatedAt is timestamp &&
+        data.updatedAt == request.time &&
+        data.updatedBy is string && data.updatedBy.size() >= 1 && data.updatedBy.size() <= 128 &&
+        data.updatedBy == request.auth.uid;
+    }
+
+    function isValidProduct(data) {
+      return data.keys().hasAll(['title', 'category', 'price', 'alt', 'imageUrl', 'createdAt', 'updatedAt', 'createdBy']) &&
+        data.keys().hasOnly(['title', 'category', 'price', 'alt', 'imageUrl', 'storagePath', 'createdAt', 'updatedAt', 'createdBy']) &&
+        data.title is string && data.title.size() >= 1 && data.title.size() <= 140 &&
+        data.category in ['Seamless Patterns', 'Mylar Bags'] &&
+        data.price is string && data.price.size() >= 1 && data.price.size() <= 24 &&
+        data.alt is string && data.alt.size() >= 1 && data.alt.size() <= 300 &&
+        data.imageUrl is string && data.imageUrl.size() >= 1 && data.imageUrl.size() <= 1000 &&
+        (!data.keys().hasAny(['storagePath']) || (data.storagePath is string && data.storagePath.size() <= 300)) &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp &&
+        data.createdBy is string && data.createdBy.size() >= 1 && data.createdBy.size() <= 128;
+    }
+
+    // -------------------------------------------------------------------------
+    // Collection Rules
+    // -------------------------------------------------------------------------
+
+    // Connectivity check document used by startup testConnection()
+    match /test/connection {
+      allow get: if true;
+      allow list, write: if false;
+    }
+
+    // Public storefront settings (`siteSettings/public`)
+    match /siteSettings/{settingId} {
+      allow get: if isValidId(settingId) && settingId == 'public';
+      allow list: if false;
+      allow create, update: if isAdmin() &&
+        isValidId(settingId) &&
+        settingId == 'public' &&
+        isValidSiteSettings(incoming());
+      allow delete: if false;
+    }
+
+    // Portfolio products catalog (`products/{productId}`)
+    // Contains only public storefront design metadata (zero PII).
+    match /products/{productId} {
+      allow get: if isValidId(productId);
+      allow list: if resource.data.category in ['Seamless Patterns', 'Mylar Bags'];
+
+      allow create: if isAdmin() &&
+        isValidId(productId) &&
+        isValidProduct(incoming()) &&
+        incoming().createdBy == request.auth.uid &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time;
+
+      allow update: if isAdmin() &&
+        isValidId(productId) &&
+        isValidProduct(incoming()) &&
+        incoming().createdBy == existing().createdBy &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        incoming().diff(existing()).affectedKeys().hasOnly(['title', 'category', 'price', 'alt', 'imageUrl', 'storagePath', 'updatedAt']);
+
+      allow delete: if isAdmin() && isValidId(productId);
+    }
+
+    // Admin registry (`admins/{userId}`)
+    match /admins/{userId} {
+      allow get: if isVerifiedUser() && isValidId(userId) && (request.auth.uid == userId || isAdmin());
+      allow list: if false;
+      allow create, update, delete: if false;
+    }
+  }
+}

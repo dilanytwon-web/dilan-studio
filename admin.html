@@ -1,0 +1,2537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dilan Studio – Admin Console</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Typography: Bricolage Grotesque + Plus Jakarta Sans + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ==========================================================================
+       DILAN STUDIO ADMIN CONSOLE — DESIGN TOKENS
+       ========================================================================== */
+    :root {
+      --bg-canvas: #f8fafc;
+      --surface-card: #ffffff;
+      --surface-subtle: #f1f5f9;
+      --border-hairline: #e2e8f0;
+      --border-strong: #cbd5e1;
+
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+
+      --accent-primary: #1d4ed8;
+      --accent-primary-hover: #1e40af;
+      --accent-surface: #eff6ff;
+
+      --status-success: #15803d;
+      --status-success-bg: #f0fdf4;
+      --status-danger: #dc2626;
+      --status-danger-bg: #fef2f2;
+      --status-warning: #b45309;
+      --status-warning-bg: #fffbeb;
+
+      --font-display: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 14px;
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--text-primary);
+      background-color: var(--bg-canvas);
+      min-height: 100vh;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font-family: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent-primary);
+      outline-offset: 2px;
+    }
+
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* ==========================================================================
+       PIN LOCK SCREEN
+       ========================================================================== */
+    .lock-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background-color: var(--bg-canvas);
+    }
+
+    .lock-card {
+      width: 100%;
+      max-width: 440px;
+      background-color: var(--surface-card);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+    }
+
+    .lock-brand {
+      font-family: var(--font-display);
+      font-size: 1.375rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .lock-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.9375rem;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .form-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .form-hint {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      min-height: 42px;
+      padding: 9px 13px;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      background-color: var(--surface-card);
+      color: var(--text-primary);
+      font-size: 0.9375rem;
+      transition: border-color 150ms var(--ease-out-expo);
+    }
+
+    .form-textarea {
+      min-height: 82px;
+      resize: vertical;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+    }
+
+    .pin-input {
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      letter-spacing: 0.25em;
+      text-align: center;
+    }
+
+    .error-banner {
+      display: none;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      background-color: var(--status-danger-bg);
+      color: var(--status-danger);
+      border: 1px solid #fecaca;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+
+    .error-banner.is-visible {
+      display: block;
+    }
+
+    .auth-notice {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 14px 18px;
+      border-radius: var(--radius-md);
+      background-color: var(--status-warning-bg);
+      border: 1px solid #fde68a;
+      color: var(--status-warning);
+      margin-bottom: 20px;
+      font-size: 0.875rem;
+    }
+
+    .auth-notice.is-authenticated {
+      background-color: var(--status-success-bg);
+      border-color: #bbf7d0;
+      color: var(--status-success);
+    }
+
+    /* ==========================================================================
+       BUTTONS
+       ========================================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.875rem;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background-color 150ms var(--ease-out-expo), border-color 150ms var(--ease-out-expo), color 150ms var(--ease-out-expo), opacity 150ms;
+    }
+
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background-color: var(--accent-primary);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background-color: var(--accent-primary-hover);
+    }
+
+    .btn-dark {
+      background-color: var(--text-primary);
+      color: #ffffff;
+    }
+
+    .btn-dark:hover:not(:disabled) {
+      background-color: #1e293b;
+    }
+
+    .btn-outline {
+      background-color: var(--surface-card);
+      color: var(--text-primary);
+      border: 1px solid var(--border-strong);
+    }
+
+    .btn-outline:hover:not(:disabled) {
+      background-color: var(--surface-subtle);
+      border-color: var(--text-primary);
+    }
+
+    .btn-danger-outline {
+      background-color: var(--surface-card);
+      color: var(--status-danger);
+      border: 1px solid #fecaca;
+    }
+
+    .btn-danger-outline:hover:not(:disabled) {
+      background-color: var(--status-danger-bg);
+      border-color: var(--status-danger);
+    }
+
+    .btn-sm {
+      min-height: 34px;
+      padding: 6px 12px;
+      font-size: 0.8125rem;
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+
+    /* ==========================================================================
+       ADMIN SHELL (SIDEBAR + TOP BAR + WORKSPACE)
+       ========================================================================== */
+    .admin-shell {
+      display: grid;
+      grid-template-columns: 248px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background-color: var(--surface-card);
+      border-right: 1px solid var(--border-hairline);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .sidebar-brand {
+      padding: 0 10px 18px;
+      border-bottom: 1px solid var(--border-hairline);
+      margin-bottom: 16px;
+    }
+
+    .sidebar-brand-title {
+      font-family: var(--font-display);
+      font-size: 1.1875rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .sidebar-brand-sub {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      min-height: 42px;
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-align: left;
+      transition: background-color 150ms var(--ease-out-expo), color 150ms var(--ease-out-expo);
+    }
+
+    .sidebar-link:hover {
+      background-color: var(--surface-subtle);
+      color: var(--text-primary);
+    }
+
+    .sidebar-link.is-active {
+      background-color: var(--accent-surface);
+      color: var(--accent-primary);
+      font-weight: 600;
+    }
+
+    .sidebar-count {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .sidebar-footer {
+      padding-top: 16px;
+      border-top: 1px solid var(--border-hairline);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .workspace {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .topbar {
+      background-color: var(--surface-card);
+      border-bottom: 1px solid var(--border-hairline);
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .breadcrumbs strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .main-content {
+      padding: 28px;
+      max-width: 1180px;
+      width: 100%;
+    }
+
+    /* Summary KPI Row */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      background-color: var(--surface-card);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+    }
+
+    .kpi-label {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .kpi-value {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    /* Section Panels */
+    .panel {
+      background-color: var(--surface-card);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .panel-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 18px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid var(--border-hairline);
+    }
+
+    .panel-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+    }
+
+    .panel-subtitle {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    /* Upload / Add Product Layout */
+    .upload-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .dropzone {
+      position: relative;
+      border: 1.5px dashed var(--border-strong);
+      border-radius: var(--radius-md);
+      background-color: var(--bg-canvas);
+      padding: 20px;
+      min-height: 230px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 10px;
+      transition: border-color 150ms var(--ease-out-expo), background-color 150ms var(--ease-out-expo);
+    }
+
+    .dropzone.is-dragover {
+      border-color: var(--accent-primary);
+      background-color: var(--accent-surface);
+    }
+
+    .dropzone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .preview-box {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--border-hairline);
+      background-color: var(--surface-subtle);
+      display: none;
+    }
+
+    .preview-box.has-image {
+      display: block;
+    }
+
+    .preview-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .progress-bar-track {
+      width: 100%;
+      height: 6px;
+      border-radius: 99px;
+      background-color: var(--surface-subtle);
+      overflow: hidden;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .progress-bar-track.is-active {
+      display: block;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background-color: var(--accent-primary);
+      transition: width 150ms linear;
+    }
+
+    /* Catalog Toolbar & Data Table */
+    .table-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .segmented-filter {
+      display: inline-flex;
+      gap: 4px;
+      padding: 4px;
+      background-color: var(--surface-subtle);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-sm);
+    }
+
+    .seg-btn {
+      min-height: 34px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .seg-btn.is-active {
+      background-color: var(--surface-card);
+      color: var(--text-primary);
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-md);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.875rem;
+    }
+
+    thead th {
+      background-color: var(--bg-canvas);
+      padding: 11px 14px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-hairline);
+      white-space: nowrap;
+    }
+
+    tbody td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-hairline);
+      vertical-align: middle;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background-color: #f8fafc;
+    }
+
+    .thumb-cell {
+      width: 72px;
+    }
+
+    .row-thumb {
+      width: 64px;
+      height: 48px;
+      border-radius: 6px;
+      object-fit: cover;
+      border: 1px solid var(--border-hairline);
+      background-color: var(--surface-subtle);
+    }
+
+    .row-title {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .row-alt {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      max-width: 300px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .row-price {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+    }
+
+    .row-link {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-primary);
+      max-width: 210px;
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .row-link:hover {
+      text-decoration: underline;
+    }
+
+    .row-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    /* ==========================================================================
+       MODAL & TOAST NOTIFICATION
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background-color: rgba(15, 23, 42, 0.65);
+    }
+
+    .modal-backdrop.is-open {
+      display: flex;
+    }
+
+    .modal-dialog {
+      width: 100%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background-color: var(--surface-card);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-hairline);
+    }
+
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 1.1875rem;
+      font-weight: 700;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-hairline);
+    }
+
+    .toast {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 120;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      max-width: 440px;
+      padding: 12px 18px;
+      border-radius: var(--radius-sm);
+      background-color: var(--text-primary);
+      color: #ffffff;
+      font-size: 0.875rem;
+      font-weight: 500;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.18);
+    }
+
+    .toast.is-visible {
+      display: flex;
+    }
+
+    .toast.is-error {
+      background-color: var(--status-danger);
+    }
+
+    .toast.is-success {
+      background-color: var(--status-success);
+    }
+
+    /* ==========================================================================
+       RESPONSIVE ADMIN LAYOUT
+       ========================================================================== */
+    @media (max-width: 960px) {
+      .admin-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border-hairline);
+        padding: 16px 20px;
+        gap: 14px;
+      }
+
+      .sidebar-brand {
+        padding-bottom: 12px;
+        margin-bottom: 10px;
+      }
+
+      .sidebar-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .sidebar-link {
+        width: auto;
+        flex: 1 1 auto;
+      }
+
+      .sidebar-footer {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .upload-grid,
+      .form-row-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar {
+        padding: 12px 16px;
+      }
+
+      .main-content {
+        padding: 16px;
+      }
+
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =====================================================================
+       1. SECURITY PIN GATE
+       ===================================================================== -->
+  <section id="lockScreen" class="lock-screen" aria-labelledby="lockHeading">
+    <div class="lock-card">
+      <h1 id="lockHeading" class="lock-brand">Dilan Studio Admin</h1>
+      <p class="lock-subtitle">
+        Unlock the studio console to manage Firebase portfolio items, product prices, hero banner artwork, and Fiverr category links.
+      </p>
+
+      <div id="pinError" class="error-banner" role="alert">Incorrect PIN. Please try again.</div>
+
+      <form id="pinForm">
+        <div class="form-group">
+          <label for="pinInput" class="form-label">Studio Access PIN</label>
+          <input
+            type="password"
+            id="pinInput"
+            class="form-input pin-input"
+            inputmode="numeric"
+            autocomplete="current-password"
+            placeholder="••••"
+            required
+          />
+          <span class="form-hint">Default setup PIN: <strong class="tabular-nums">1234</strong> (changeable inside Security).</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full">Unlock Admin Console</button>
+      </form>
+
+      <div style="margin-top: 20px; text-align: center;">
+        <a href="index.html" style="font-size: 0.875rem; color: var(--text-secondary); text-decoration: underline; text-underline-offset: 3px;">
+          Return to Public Showcase
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       2. AUTHENTICATED ADMIN CONSOLE
+       ===================================================================== -->
+  <div id="adminApp" class="admin-shell hidden">
+    <!-- Left Sidebar -->
+    <aside class="sidebar" aria-label="Admin Navigation">
+      <div>
+        <div class="sidebar-brand">
+          <div class="sidebar-brand-title">Dilan Studio</div>
+          <div class="sidebar-brand-sub">Firebase Cloud Console</div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <button type="button" class="sidebar-link is-active" data-section="catalog">
+            <span>Catalog &amp; Designs</span>
+            <span class="sidebar-count tabular-nums" id="navCountCatalog">0</span>
+          </button>
+          <button type="button" class="sidebar-link" data-section="hero">
+            <span>Hero Banner Image</span>
+          </button>
+          <button type="button" class="sidebar-link" data-section="links">
+            <span>Fiverr Category Links</span>
+            <span class="sidebar-count tabular-nums">2</span>
+          </button>
+          <button type="button" class="sidebar-link" data-section="security">
+            <span>Security &amp; Backup</span>
+          </button>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="index.html" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-full">
+          Open Public Showcase
+        </a>
+        <button type="button" id="lockBtn" class="btn btn-dark btn-full">
+          Lock Panel
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="workspace">
+      <header class="topbar">
+        <div class="breadcrumbs">
+          <span>Dilan Studio</span>
+          <span aria-hidden="true">/</span>
+          <strong id="breadcrumbSection">Catalog &amp; Designs</strong>
+        </div>
+
+        <div class="topbar-actions">
+          <button type="button" id="googleAuthTopBtn" class="btn btn-primary btn-sm">
+            Sign in with Google (Admin)
+          </button>
+          <a href="index.html" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+            Preview Live Site
+          </a>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <!-- Firebase Admin Auth Status Bar -->
+        <div id="authNoticeBar" class="auth-notice">
+          <div>
+            <strong id="authNoticeTitle">Google Admin Sign-In Required for Cloud Writes</strong>
+            <div id="authNoticeDesc">Sign in with your verified studio Google account to publish, edit, or delete data in Firebase Firestore &amp; Storage.</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <button type="button" id="googleAuthBannerBtn" class="btn btn-primary btn-sm">Sign in with Google</button>
+            <button type="button" id="googleSignOutBtn" class="btn btn-outline btn-sm hidden">Sign Out</button>
+          </div>
+        </div>
+
+        <!-- Live Metrics Row -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-label">Published Designs (Firestore)</div>
+            <div class="kpi-value tabular-nums" id="kpiTotal">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Seamless Patterns</div>
+            <div class="kpi-value tabular-nums" id="kpiPatterns">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Mylar Bags &amp; Packaging</div>
+            <div class="kpi-value tabular-nums" id="kpiMylar">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Active Category Gigs</div>
+            <div class="kpi-value tabular-nums">2</div>
+          </div>
+        </div>
+
+        <!-- ===============================================================
+             TAB 1: CATALOG & DESIGNS (ADD WITH PRICE + LIST + EDIT + DELETE)
+             =============================================================== -->
+        <section id="section-catalog">
+          <!-- Add New Design Card -->
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title">Add New Design to Firebase</h2>
+                <p class="panel-subtitle">
+                  Upload artwork to Firebase Storage and save product title, category, price, and SEO metadata to Firestore.
+                </p>
+              </div>
+              <button type="button" id="seedDefaultsBtn" class="btn btn-outline btn-sm hidden">
+                Seed Default Studio Showcase
+              </button>
+            </div>
+
+            <form id="addProductForm" class="upload-grid">
+              <div>
+                <div class="form-row-2">
+                  <div class="form-group">
+                    <label for="prodCategory" class="form-label">Category</label>
+                    <select id="prodCategory" class="form-select" required>
+                      <option value="Seamless Patterns">Seamless Patterns</option>
+                      <option value="Mylar Bags">Mylar Bags</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="prodPrice" class="form-label">Price (USD)</label>
+                    <input
+                      type="text"
+                      id="prodPrice"
+                      class="form-input tabular-nums"
+                      placeholder="e.g., $25"
+                      value="$25"
+                      maxlength="24"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="prodTitle" class="form-label">Design Title</label>
+                  <input
+                    type="text"
+                    id="prodTitle"
+                    class="form-input"
+                    placeholder="e.g., Tropical Citrus Seamless Repeat or Cosmic Matte Mylar Pouch"
+                    maxlength="140"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                    <label for="prodAlt" class="form-label">SEO Alt Text (Google Image Ranking)</label>
+                    <button
+                      type="button"
+                      id="autoAltBtn"
+                      style="font-size: 0.75rem; font-weight: 600; color: var(--accent-primary);"
+                    >
+                      Auto-suggest keywords
+                    </button>
+                  </div>
+                  <textarea
+                    id="prodAlt"
+                    class="form-textarea"
+                    placeholder="Descriptive keyword-rich alt text for Google Search (e.g., Custom Mylar bag packaging design with holographic finish by Dilan Studio)"
+                    maxlength="300"
+                    required
+                  ></textarea>
+                </div>
+
+                <button type="submit" id="addSubmitBtn" class="btn btn-primary">
+                  Publish Design to Firebase
+                </button>
+              </div>
+
+              <div>
+                <label class="form-label" style="display: block; margin-bottom: 6px;">Design Artwork Image (Firebase Storage)</label>
+                <div id="uploadDropzone" class="dropzone">
+                  <input type="file" id="prodFile" accept="image/png,image/jpeg,image/webp,image/svg+xml" />
+                  <div id="dropzonePrompt">
+                    <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">
+                      Click to upload or drag &amp; drop
+                    </p>
+                    <p class="form-hint">PNG, JPG, WEBP, or SVG uploaded to Firebase Storage.</p>
+                  </div>
+                  <div id="uploadPreviewBox" class="preview-box">
+                    <img id="uploadPreviewImg" src="" alt="Selected artwork preview" />
+                  </div>
+                </div>
+                <div id="prodUploadProgressTrack" class="progress-bar-track">
+                  <div id="prodUploadProgressFill" class="progress-bar-fill"></div>
+                </div>
+                <p id="uploadFileMeta" class="form-hint" style="margin-top: 8px;"></p>
+
+                <div class="form-group" style="margin-top: 12px; margin-bottom: 0;">
+                  <label for="prodImageUrlInput" class="form-label">Or Direct Image URL (Optional)</label>
+                  <input
+                    type="url"
+                    id="prodImageUrlInput"
+                    class="form-input"
+                    placeholder="https://... (auto-filled if uploading file above)"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Existing Designs Catalog -->
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title">Published Portfolio Catalog</h2>
+                <p class="panel-subtitle">Live Firestore inventory visible to all visitors on index.html.</p>
+              </div>
+            </div>
+
+            <div class="table-toolbar">
+              <div class="segmented-filter" role="group" aria-label="Filter catalog by category">
+                <button type="button" class="seg-btn is-active" data-admin-filter="all">All</button>
+                <button type="button" class="seg-btn" data-admin-filter="Seamless Patterns">Seamless Patterns</button>
+                <button type="button" class="seg-btn" data-admin-filter="Mylar Bags">Mylar Bags</button>
+              </div>
+
+              <input
+                type="search"
+                id="adminSearch"
+                class="form-input"
+                style="max-width: 280px;"
+                placeholder="Search catalog..."
+                aria-label="Search uploaded designs"
+              />
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Artwork</th>
+                    <th>Design &amp; SEO Alt Text</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Assigned Fiverr Link</th>
+                    <th style="text-align: right;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="catalogTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===============================================================
+             TAB 2: EDITABLE HERO BANNER IMAGE
+             =============================================================== -->
+        <section id="section-hero" class="hidden">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title">Homepage Hero Showcase Image</h2>
+                <p class="panel-subtitle">
+                  Upload and replace the main featured image displayed beside the homepage headline for all visitors.
+                </p>
+              </div>
+            </div>
+
+            <form id="heroForm" class="upload-grid">
+              <div>
+                <div class="form-group">
+                  <label class="form-label">Current / Selected Hero Preview</label>
+                  <div class="preview-box has-image" style="max-width: 520px;">
+                    <img id="heroPreviewImg" src="./src/assets/images/hero_dilan_studio_1794896084865.jpg" alt="Homepage Hero Showcase Preview" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="heroImageUrlInput" class="form-label">Hero Image URL (Saved in Firestore)</label>
+                  <input
+                    type="text"
+                    id="heroImageUrlInput"
+                    class="form-input"
+                    placeholder="https://... or ./src/assets/images/..."
+                    required
+                  />
+                  <span class="form-hint">Updates live on the public homepage for all visitors once saved.</span>
+                </div>
+
+                <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                  <button type="submit" id="saveHeroBtn" class="btn btn-primary">Save Hero Banner to Firebase</button>
+                  <button type="button" id="resetHeroBtn" class="btn btn-outline">Restore Default Studio Image</button>
+                </div>
+              </div>
+
+              <div>
+                <label class="form-label" style="display: block; margin-bottom: 6px;">Upload New Hero Image File</label>
+                <div id="heroDropzone" class="dropzone">
+                  <input type="file" id="heroFileInput" accept="image/png,image/jpeg,image/webp" />
+                  <div>
+                    <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">
+                      Click to upload a new Hero Image
+                    </p>
+                    <p class="form-hint">Recommended 4:3 or 16:9 high-resolution JPG/PNG/WEBP.</p>
+                  </div>
+                </div>
+                <div id="heroUploadProgressTrack" class="progress-bar-track">
+                  <div id="heroUploadProgressFill" class="progress-bar-fill"></div>
+                </div>
+                <p id="heroFileMeta" class="form-hint" style="margin-top: 8px;"></p>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- ===============================================================
+             TAB 3: CATEGORY FIVERR LINK MANAGEMENT
+             =============================================================== -->
+        <section id="section-links" class="hidden">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title">Master Fiverr Gig Links by Category</h2>
+                <p class="panel-subtitle">
+                  Saved in Firebase Firestore. Updating a link immediately redirects all existing and future products in that category.
+                </p>
+              </div>
+            </div>
+
+            <form id="linksForm" style="max-width: 680px;">
+              <div class="form-group">
+                <label for="linkPatterns" class="form-label">
+                  Seamless Patterns — Master Fiverr Gig URL
+                </label>
+                <input
+                  type="url"
+                  id="linkPatterns"
+                  class="form-input"
+                  placeholder="https://www.fiverr.com/your-username/seamless-pattern-gig"
+                  required
+                />
+                <span class="form-hint tabular-nums" id="affectedPatternsHint">
+                  Applies to all products in "Seamless Patterns".
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label for="linkMylar" class="form-label">
+                  Mylar Bags — Master Fiverr Gig URL
+                </label>
+                <input
+                  type="url"
+                  id="linkMylar"
+                  class="form-input"
+                  placeholder="https://www.fiverr.com/your-username/mylar-bag-packaging-gig"
+                  required
+                />
+                <span class="form-hint tabular-nums" id="affectedMylarHint">
+                  Applies to all products in "Mylar Bags".
+                </span>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 12px; margin-top: 24px;">
+                <button type="submit" id="saveLinksBtn" class="btn btn-primary">Save Category Links to Firebase</button>
+                <a href="index.html" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+                  Verify on Live Site
+                </a>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- ===============================================================
+             TAB 4: SECURITY & BACKUP
+             ===================================================================== -->
+        <section id="section-security" class="hidden">
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title">Change Studio Access PIN</h2>
+                <p class="panel-subtitle">Protect this admin screen locally alongside Google Firebase Admin Auth.</p>
+              </div>
+            </div>
+
+            <form id="changePinForm" style="max-width: 420px;">
+              <div class="form-group">
+                <label for="newPinInput" class="form-label">New PIN (4–12 characters)</label>
+                <input
+                  type="password"
+                  id="newPinInput"
+                  class="form-input"
+                  minlength="4"
+                  maxlength="12"
+                  placeholder="Enter new PIN"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="confirmPinInput" class="form-label">Confirm New PIN</label>
+                <input
+                  type="password"
+                  id="confirmPinInput"
+                  class="form-input"
+                  minlength="4"
+                  maxlength="12"
+                  placeholder="Confirm new PIN"
+                  required
+                />
+              </div>
+
+              <button type="submit" class="btn btn-primary">Update Access PIN</button>
+            </form>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title">Firestore Catalog Export</h2>
+                <p class="panel-subtitle">
+                  Download a JSON backup of your current Firestore settings and portfolio designs.
+                </p>
+              </div>
+            </div>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+              <button type="button" id="exportJsonBtn" class="btn btn-outline">Export Catalog JSON</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       EDIT DESIGN MODAL
+       ===================================================================== -->
+  <div id="editModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="editModalTitle" class="modal-title">Edit Design</h3>
+        <button type="button" id="editModalClose" class="btn btn-outline btn-sm" aria-label="Close modal">&times;</button>
+      </div>
+
+      <form id="editProductForm">
+        <input type="hidden" id="editProdId" />
+        <input type="hidden" id="editStoragePath" />
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="editProdCategory" class="form-label">Category</label>
+            <select id="editProdCategory" class="form-select" required>
+              <option value="Seamless Patterns">Seamless Patterns</option>
+              <option value="Mylar Bags">Mylar Bags</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="editProdPrice" class="form-label">Price (USD)</label>
+            <input type="text" id="editProdPrice" class="form-input tabular-nums" maxlength="24" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="editProdTitle" class="form-label">Design Title</label>
+          <input type="text" id="editProdTitle" class="form-input" maxlength="140" required />
+        </div>
+
+        <div class="form-group">
+          <label for="editProdAlt" class="form-label">SEO Alt Text</label>
+          <textarea id="editProdAlt" class="form-textarea" maxlength="300" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="editProdFile" class="form-label">Replace Image File (Firebase Storage)</label>
+          <input type="file" id="editProdFile" class="form-input" accept="image/png,image/jpeg,image/webp,image/svg+xml" />
+          <div id="editUploadProgressTrack" class="progress-bar-track">
+            <div id="editUploadProgressFill" class="progress-bar-fill"></div>
+          </div>
+          <div style="margin-top: 10px; display: flex; align-items: center; gap: 14px;">
+            <img
+              id="editPreviewImg"
+              src=""
+              alt="Current design thumbnail"
+              style="width: 120px; height: 90px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border-hairline); flex-shrink: 0;"
+            />
+            <div style="flex: 1;">
+              <label for="editProdImageUrl" class="form-label" style="font-size: 0.8125rem;">Image URL</label>
+              <input type="text" id="editProdImageUrl" class="form-input" required />
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="editCancelBtn" class="btn btn-outline">Cancel</button>
+          <button type="submit" id="editSaveBtn" class="btn btn-primary">Save Changes to Firebase</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       CONFIRMATION MODAL (DELETE)
+       ===================================================================== -->
+  <div id="confirmModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <div class="modal-dialog" style="max-width: 420px;">
+      <div class="modal-header">
+        <h3 id="confirmTitle" class="modal-title">Confirm Action</h3>
+        <button type="button" id="confirmCloseBtn" class="btn btn-outline btn-sm" aria-label="Close">&times;</button>
+      </div>
+      <p id="confirmMessage" style="color: var(--text-secondary);"></p>
+      <div class="modal-footer">
+        <button type="button" id="confirmCancelBtn" class="btn btn-outline">Cancel</button>
+        <button type="button" id="confirmProceedBtn" class="btn btn-danger-outline">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Status Banner -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- =====================================================================
+       FIREBASE v10 CDN INTEGRATION + ADMIN LOGIC
+       ===================================================================== -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
+    import {
+      getAuth,
+      GoogleAuthProvider,
+      signInWithPopup,
+      signOut,
+      onAuthStateChanged
+    } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+    import {
+      getFirestore,
+      collection,
+      doc,
+      getDocFromServer,
+      setDoc,
+      updateDoc,
+      deleteDoc,
+      onSnapshot,
+      query,
+      where,
+      serverTimestamp
+    } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+    import {
+      getStorage,
+      ref as storageRef,
+      uploadBytesResumable,
+      getDownloadURL,
+      deleteObject
+    } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js';
+
+    /* ---------------------------------------------------------------------
+       1. FIREBASE CONFIGURATION
+          Replace these credentials with your own Firebase project config
+          from Firebase Console -> Project Settings -> Your Apps if deploying
+          to an external Firebase project.
+       --------------------------------------------------------------------- */
+    const firebaseConfig = {
+      apiKey: "AIzaSyC2N1PN5ewRsMwJtYs52oG3UEBYaLuU44w",
+      authDomain: "gen-lang-client-0390672167.firebaseapp.com",
+      projectId: "gen-lang-client-0390672167",
+      storageBucket: "gen-lang-client-0390672167.firebasestorage.app",
+      messagingSenderId: "462083263085",
+      appId: "1:462083263085:web:e7acee0035b68674f28d64",
+      // Leave empty or remove firestoreDatabaseId if using a standard "(default)" Firestore database:
+      firestoreDatabaseId: "ai-studio-dilanstudio-446b2d0c-8bf4-4264-871e-074eb3137214"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = firebaseConfig.firestoreDatabaseId
+      ? getFirestore(app, firebaseConfig.firestoreDatabaseId)
+      : getFirestore(app);
+    const storage = getStorage(app);
+
+    /* ---------------------------------------------------------------------
+       2. STRUCTURED FIRESTORE ERROR HANDLER & CONNECTION TEST
+       --------------------------------------------------------------------- */
+    const OperationType = {
+      CREATE: 'create',
+      UPDATE: 'update',
+      DELETE: 'delete',
+      LIST: 'list',
+      GET: 'get',
+      WRITE: 'write'
+    };
+
+    function handleFirestoreError(error, operationType, path) {
+      const user = auth.currentUser;
+      const errInfo = {
+        error: error instanceof Error ? error.message : String(error),
+        authInfo: {
+          userId: user ? user.uid : null,
+          email: user ? user.email : null,
+          emailVerified: user ? user.emailVerified : null
+        },
+        operationType: operationType,
+        path: path
+      };
+      console.error('Firestore Error:', JSON.stringify(errInfo));
+      return errInfo;
+    }
+
+    async function testConnection() {
+      try {
+        await getDocFromServer(doc(db, 'test', 'connection'));
+      } catch (error) {
+        if (error instanceof Error && error.message.includes('the client is offline')) {
+          console.error('Please check your Firebase configuration.');
+        }
+      }
+    }
+    testConnection();
+
+    /* ---------------------------------------------------------------------
+       3. CONSTANTS & DEFAULT STUDIO SEED
+       --------------------------------------------------------------------- */
+    const PIN_STORAGE_KEY = 'dilan_studio_pin_hash_v1';
+    const SESSION_UNLOCKED_KEY = 'dilan_studio_session_unlocked';
+    const DEFAULT_PIN = '1234';
+
+    const DEFAULT_SETTINGS = {
+      patternsGigUrl: 'https://www.fiverr.com/search/gigs?query=seamless%20pattern%20design',
+      mylarGigUrl: 'https://www.fiverr.com/search/gigs?query=mylar%20bag%20packaging%20design',
+      heroImageUrl: './src/assets/images/hero_dilan_studio_1794896084865.jpg'
+    };
+
+    const DEFAULT_SEED_PRODUCTS = [
+      {
+        id: 'ds-pat-001',
+        title: 'Mediterranean Citrus & Olive Botanical Repeat',
+        category: 'Seamless Patterns',
+        price: '$25',
+        alt: 'Mediterranean citrus blossom and olive branch seamless surface pattern swatch on deep slate charcoal textile print',
+        imageUrl: './src/assets/images/pattern_citrus_botanical_1794896083595.jpg'
+      },
+      {
+        id: 'ds-myl-001',
+        title: 'Botanical Bliss Holographic Stand-Up Mylar Pouch',
+        category: 'Mylar Bags',
+        price: '$45',
+        alt: 'Custom Mylar bag packaging design with matte botanical illustration and holographic foil window on limestone pedestal',
+        imageUrl: './src/assets/images/mylar_iridescent_pouch_1794896085762.jpg'
+      },
+      {
+        id: 'ds-pat-002',
+        title: 'Modern Arches & Tropical Foliage Seamless Pattern',
+        category: 'Seamless Patterns',
+        price: '$30',
+        alt: 'Mid-century geometric arches and botanical leaves seamless surface pattern design printed on archival cotton paper',
+        imageUrl: './src/assets/images/pattern_midcentury_geo_1794896086156.jpg'
+      },
+      {
+        id: 'ds-myl-002',
+        title: 'Aether Copper Foil Matte Charcoal Mylar Bag',
+        category: 'Mylar Bags',
+        price: '$55',
+        alt: 'Custom Mylar bag packaging design featuring matte charcoal finish and copper foil emblem for artisan botanicals',
+        imageUrl: './src/assets/images/mylar_artisan_roast_1794896086911.jpg'
+      }
+    ];
+
+    /* ---------------------------------------------------------------------
+       4. PIN HASHING & AUTH HELPERS
+       --------------------------------------------------------------------- */
+    async function hashPin(pin) {
+      const input = 'dilan_salt_' + String(pin);
+      if (window.crypto && window.crypto.subtle && window.TextEncoder) {
+        try {
+          const encoded = new TextEncoder().encode(input);
+          const digest = await window.crypto.subtle.digest('SHA-256', encoded);
+          const arr = Array.from(new Uint8Array(digest));
+          return 'sha256_' + arr.map((b) => b.toString(16).padStart(2, '0')).join('');
+        } catch (e) {
+          // Fallback below
+        }
+      }
+      let hash = 5381;
+      for (let i = 0; i < input.length; i++) {
+        hash = ((hash << 5) + hash) ^ input.charCodeAt(i);
+      }
+      return 'fnv_' + (hash >>> 0).toString(16);
+    }
+
+    async function ensurePinInitialized() {
+      if (!localStorage.getItem(PIN_STORAGE_KEY)) {
+        const defaultHash = await hashPin(DEFAULT_PIN);
+        localStorage.setItem(PIN_STORAGE_KEY, defaultHash);
+      }
+    }
+
+    /* ---------------------------------------------------------------------
+       5. APPLICATION STATE & DOM REFERENCES
+       --------------------------------------------------------------------- */
+    const state = {
+      user: null,
+      activeSection: 'catalog',
+      adminFilter: 'all',
+      adminSearch: '',
+      settings: { ...DEFAULT_SETTINGS },
+      catalog: [],
+      pendingUploadFile: null,
+      pendingEditFile: null,
+      pendingHeroFile: null,
+      pendingConfirmAction: null,
+      subscriptionsStarted: false
+    };
+
+    const els = {
+      lockScreen: document.getElementById('lockScreen'),
+      adminApp: document.getElementById('adminApp'),
+      pinForm: document.getElementById('pinForm'),
+      pinInput: document.getElementById('pinInput'),
+      pinError: document.getElementById('pinError'),
+      lockBtn: document.getElementById('lockBtn'),
+
+      googleAuthTopBtn: document.getElementById('googleAuthTopBtn'),
+      googleAuthBannerBtn: document.getElementById('googleAuthBannerBtn'),
+      googleSignOutBtn: document.getElementById('googleSignOutBtn'),
+      authNoticeBar: document.getElementById('authNoticeBar'),
+      authNoticeTitle: document.getElementById('authNoticeTitle'),
+      authNoticeDesc: document.getElementById('authNoticeDesc'),
+
+      sidebarLinks: document.querySelectorAll('.sidebar-link[data-section]'),
+      breadcrumbSection: document.getElementById('breadcrumbSection'),
+      sections: {
+        catalog: document.getElementById('section-catalog'),
+        hero: document.getElementById('section-hero'),
+        links: document.getElementById('section-links'),
+        security: document.getElementById('section-security')
+      },
+
+      kpiTotal: document.getElementById('kpiTotal'),
+      kpiPatterns: document.getElementById('kpiPatterns'),
+      kpiMylar: document.getElementById('kpiMylar'),
+      navCountCatalog: document.getElementById('navCountCatalog'),
+      seedDefaultsBtn: document.getElementById('seedDefaultsBtn'),
+
+      addProductForm: document.getElementById('addProductForm'),
+      prodCategory: document.getElementById('prodCategory'),
+      prodPrice: document.getElementById('prodPrice'),
+      prodTitle: document.getElementById('prodTitle'),
+      prodAlt: document.getElementById('prodAlt'),
+      autoAltBtn: document.getElementById('autoAltBtn'),
+      prodFile: document.getElementById('prodFile'),
+      prodImageUrlInput: document.getElementById('prodImageUrlInput'),
+      uploadDropzone: document.getElementById('uploadDropzone'),
+      dropzonePrompt: document.getElementById('dropzonePrompt'),
+      uploadPreviewBox: document.getElementById('uploadPreviewBox'),
+      uploadPreviewImg: document.getElementById('uploadPreviewImg'),
+      uploadFileMeta: document.getElementById('uploadFileMeta'),
+      prodUploadProgressTrack: document.getElementById('prodUploadProgressTrack'),
+      prodUploadProgressFill: document.getElementById('prodUploadProgressFill'),
+      addSubmitBtn: document.getElementById('addSubmitBtn'),
+
+      adminFilterBtns: document.querySelectorAll('.seg-btn[data-admin-filter]'),
+      adminSearch: document.getElementById('adminSearch'),
+      catalogTableBody: document.getElementById('catalogTableBody'),
+
+      heroForm: document.getElementById('heroForm'),
+      heroPreviewImg: document.getElementById('heroPreviewImg'),
+      heroImageUrlInput: document.getElementById('heroImageUrlInput'),
+      heroFileInput: document.getElementById('heroFileInput'),
+      heroDropzone: document.getElementById('heroDropzone'),
+      heroUploadProgressTrack: document.getElementById('heroUploadProgressTrack'),
+      heroUploadProgressFill: document.getElementById('heroUploadProgressFill'),
+      heroFileMeta: document.getElementById('heroFileMeta'),
+      saveHeroBtn: document.getElementById('saveHeroBtn'),
+      resetHeroBtn: document.getElementById('resetHeroBtn'),
+
+      linksForm: document.getElementById('linksForm'),
+      linkPatterns: document.getElementById('linkPatterns'),
+      linkMylar: document.getElementById('linkMylar'),
+      affectedPatternsHint: document.getElementById('affectedPatternsHint'),
+      affectedMylarHint: document.getElementById('affectedMylarHint'),
+      saveLinksBtn: document.getElementById('saveLinksBtn'),
+
+      changePinForm: document.getElementById('changePinForm'),
+      newPinInput: document.getElementById('newPinInput'),
+      confirmPinInput: document.getElementById('confirmPinInput'),
+      exportJsonBtn: document.getElementById('exportJsonBtn'),
+
+      editModal: document.getElementById('editModal'),
+      editModalClose: document.getElementById('editModalClose'),
+      editCancelBtn: document.getElementById('editCancelBtn'),
+      editProductForm: document.getElementById('editProductForm'),
+      editProdId: document.getElementById('editProdId'),
+      editStoragePath: document.getElementById('editStoragePath'),
+      editProdCategory: document.getElementById('editProdCategory'),
+      editProdPrice: document.getElementById('editProdPrice'),
+      editProdTitle: document.getElementById('editProdTitle'),
+      editProdAlt: document.getElementById('editProdAlt'),
+      editProdFile: document.getElementById('editProdFile'),
+      editProdImageUrl: document.getElementById('editProdImageUrl'),
+      editPreviewImg: document.getElementById('editPreviewImg'),
+      editUploadProgressTrack: document.getElementById('editUploadProgressTrack'),
+      editUploadProgressFill: document.getElementById('editUploadProgressFill'),
+      editSaveBtn: document.getElementById('editSaveBtn'),
+
+      confirmModal: document.getElementById('confirmModal'),
+      confirmTitle: document.getElementById('confirmTitle'),
+      confirmMessage: document.getElementById('confirmMessage'),
+      confirmCloseBtn: document.getElementById('confirmCloseBtn'),
+      confirmCancelBtn: document.getElementById('confirmCancelBtn'),
+      confirmProceedBtn: document.getElementById('confirmProceedBtn'),
+
+      toast: document.getElementById('toast')
+    };
+
+    /* ---------------------------------------------------------------------
+       6. TOAST & MODAL HELPERS
+       --------------------------------------------------------------------- */
+    let toastTimer = null;
+    function showToast(message, type) {
+      clearTimeout(toastTimer);
+      els.toast.textContent = message;
+      els.toast.className = 'toast is-visible ' + (type === 'error' ? 'is-error' : 'is-success');
+      toastTimer = setTimeout(() => {
+        els.toast.classList.remove('is-visible');
+      }, 4000);
+    }
+
+    function openConfirmModal(title, message, onConfirm) {
+      els.confirmTitle.textContent = title;
+      els.confirmMessage.textContent = message;
+      state.pendingConfirmAction = onConfirm;
+      els.confirmModal.classList.add('is-open');
+    }
+
+    function closeConfirmModal() {
+      els.confirmModal.classList.remove('is-open');
+      state.pendingConfirmAction = null;
+    }
+
+    function normalizeUrl(rawUrl) {
+      const trimmed = (rawUrl || '').trim();
+      if (!trimmed) return '';
+      if (/^https?:\/\//i.test(trimmed)) return trimmed;
+      return 'https://' + trimmed;
+    }
+
+    function normalizePrice(rawPrice) {
+      const trimmed = (rawPrice || '').trim();
+      if (!trimmed) return '$25';
+      if (/^\d+(\.\d{1,2})?$/.test(trimmed)) return '$' + trimmed;
+      return trimmed.slice(0, 24);
+    }
+
+    /* ---------------------------------------------------------------------
+       7. FIREBASE STORAGE UPLOAD HELPER
+       --------------------------------------------------------------------- */
+    function uploadImageToStorage(file, folderPath, progressTrackEl, progressFillEl) {
+      return new Promise((resolve, reject) => {
+        if (!file) {
+          reject(new Error('No file selected.'));
+          return;
+        }
+        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+        const path = folderPath + '/' + Date.now() + '_' + safeName;
+        const fileRef = storageRef(storage, path);
+
+        progressTrackEl.classList.add('is-active');
+        progressFillEl.style.width = '5%';
+
+        const uploadTask = uploadBytesResumable(fileRef, file, {
+          contentType: file.type || 'image/jpeg'
+        });
+
+        uploadTask.on(
+          'state_changed',
+          (snapshot) => {
+            const pct = snapshot.totalBytes > 0
+              ? Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+              : 50;
+            progressFillEl.style.width = pct + '%';
+          },
+          (error) => {
+            progressTrackEl.classList.remove('is-active');
+            progressFillEl.style.width = '0%';
+            reject(error);
+          },
+          async () => {
+            try {
+              const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+              progressTrackEl.classList.remove('is-active');
+              progressFillEl.style.width = '0%';
+              resolve({ downloadUrl, storagePath: path });
+            } catch (err) {
+              progressTrackEl.classList.remove('is-active');
+              progressFillEl.style.width = '0%';
+              reject(err);
+            }
+          }
+        );
+      });
+    }
+
+    async function deleteStorageAsset(path) {
+      if (!path) return;
+      try {
+        await deleteObject(storageRef(storage, path));
+      } catch (err) {
+        // Ignore missing/unowned storage objects during cleanup
+      }
+    }
+
+    /* ---------------------------------------------------------------------
+       8. GOOGLE ADMIN AUTHENTICATION & PIN LOCK
+       --------------------------------------------------------------------- */
+    async function triggerGoogleSignIn() {
+      const provider = new GoogleAuthProvider();
+      try {
+        await signInWithPopup(auth, provider);
+        showToast('Signed in with Google Admin account.', 'success');
+      } catch (err) {
+        showToast(err.message || 'Google sign-in failed.', 'error');
+      }
+    }
+
+    onAuthStateChanged(auth, (user) => {
+      state.user = user;
+      if (user) {
+        els.authNoticeBar.classList.add('is-authenticated');
+        els.authNoticeTitle.textContent = 'Connected to Firebase as ' + (user.email || user.uid);
+        els.authNoticeDesc.textContent = 'All product prices, hero banner updates, and Fiverr links save directly to Firestore.';
+        els.googleAuthBannerBtn.classList.add('hidden');
+        els.googleAuthTopBtn.classList.add('hidden');
+        els.googleSignOutBtn.classList.remove('hidden');
+      } else {
+        els.authNoticeBar.classList.remove('is-authenticated');
+        els.authNoticeTitle.textContent = 'Google Admin Sign-In Required for Cloud Writes';
+        els.authNoticeDesc.textContent = 'Sign in with your verified studio Google account to publish, edit, or delete data in Firebase Firestore & Storage.';
+        els.googleAuthBannerBtn.classList.remove('hidden');
+        els.googleAuthTopBtn.classList.remove('hidden');
+        els.googleSignOutBtn.classList.add('hidden');
+      }
+    });
+
+    els.googleAuthTopBtn.addEventListener('click', triggerGoogleSignIn);
+    els.googleAuthBannerBtn.addEventListener('click', triggerGoogleSignIn);
+    els.googleSignOutBtn.addEventListener('click', async () => {
+      await signOut(auth);
+      showToast('Signed out from Google Admin.', 'success');
+    });
+
+    function requireAuthenticatedAdmin() {
+      if (!state.user) {
+        showToast('Please sign in with Google (Admin) first to write to Firebase.', 'error');
+        return false;
+      }
+      return true;
+    }
+
+    function unlockConsole() {
+      sessionStorage.setItem(SESSION_UNLOCKED_KEY, '1');
+      els.lockScreen.classList.add('hidden');
+      els.adminApp.classList.remove('hidden');
+      if (!state.subscriptionsStarted) {
+        startFirestoreSubscriptions();
+      }
+    }
+
+    function lockConsole() {
+      sessionStorage.removeItem(SESSION_UNLOCKED_KEY);
+      els.adminApp.classList.add('hidden');
+      els.lockScreen.classList.remove('hidden');
+      els.pinInput.value = '';
+      els.pinError.classList.remove('is-visible');
+      els.pinInput.focus();
+    }
+
+    els.pinForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await ensurePinInitialized();
+      const entered = els.pinInput.value.trim();
+      const storedHash = localStorage.getItem(PIN_STORAGE_KEY);
+      const enteredHash = await hashPin(entered);
+
+      if (enteredHash === storedHash) {
+        els.pinError.classList.remove('is-visible');
+        unlockConsole();
+      } else {
+        els.pinError.classList.add('is-visible');
+        els.pinInput.select();
+      }
+    });
+
+    els.lockBtn.addEventListener('click', lockConsole);
+
+    /* ---------------------------------------------------------------------
+       9. FIRESTORE REAL-TIME SUBSCRIPTIONS & RENDERING
+       --------------------------------------------------------------------- */
+    function startFirestoreSubscriptions() {
+      state.subscriptionsStarted = true;
+
+      onSnapshot(
+        doc(db, 'siteSettings', 'public'),
+        (snap) => {
+          if (snap.exists()) {
+            const d = snap.data();
+            state.settings = {
+              patternsGigUrl: d.patternsGigUrl || DEFAULT_SETTINGS.patternsGigUrl,
+              mylarGigUrl: d.mylarGigUrl || DEFAULT_SETTINGS.mylarGigUrl,
+              heroImageUrl: d.heroImageUrl || DEFAULT_SETTINGS.heroImageUrl
+            };
+          } else {
+            state.settings = { ...DEFAULT_SETTINGS };
+          }
+          syncSettingsInputs();
+          renderCatalogTable();
+        },
+        (error) => {
+          handleFirestoreError(error, OperationType.GET, 'siteSettings/public');
+          syncSettingsInputs();
+        }
+      );
+
+      const q = query(
+        collection(db, 'products'),
+        where('category', 'in', ['Seamless Patterns', 'Mylar Bags'])
+      );
+
+      onSnapshot(
+        q,
+        (snapshot) => {
+          const list = [];
+          snapshot.forEach((docSnap) => {
+            const d = docSnap.data();
+            list.push({
+              id: docSnap.id,
+              title: d.title,
+              category: d.category,
+              price: d.price || '$25',
+              alt: d.alt || '',
+              imageUrl: d.imageUrl || '',
+              storagePath: d.storagePath || '',
+              createdAtMs: d.createdAt && typeof d.createdAt.toMillis === 'function' ? d.createdAt.toMillis() : 0
+            });
+          });
+          list.sort((a, b) => b.createdAtMs - a.createdAtMs);
+          state.catalog = list;
+          els.seedDefaultsBtn.classList.toggle('hidden', list.length > 0);
+          renderCatalogTable();
+        },
+        (error) => {
+          handleFirestoreError(error, OperationType.LIST, 'products');
+        }
+      );
+    }
+
+    function syncSettingsInputs() {
+      els.linkPatterns.value = state.settings.patternsGigUrl;
+      els.linkMylar.value = state.settings.mylarGigUrl;
+      els.heroImageUrlInput.value = state.settings.heroImageUrl;
+      els.heroPreviewImg.src = state.settings.heroImageUrl || DEFAULT_SETTINGS.heroImageUrl;
+    }
+
+    function renderCatalogTable() {
+      const patternCount = state.catalog.filter((i) => i.category === 'Seamless Patterns').length;
+      const mylarCount = state.catalog.filter((i) => i.category === 'Mylar Bags').length;
+
+      els.kpiTotal.textContent = String(state.catalog.length);
+      els.kpiPatterns.textContent = String(patternCount);
+      els.kpiMylar.textContent = String(mylarCount);
+      els.navCountCatalog.textContent = String(state.catalog.length);
+
+      els.affectedPatternsHint.textContent = 'Currently powers ' + patternCount + ' design(s) under Seamless Patterns.';
+      els.affectedMylarHint.textContent = 'Currently powers ' + mylarCount + ' design(s) under Mylar Bags.';
+
+      const searchTerm = state.adminSearch.trim().toLowerCase();
+      const filtered = state.catalog.filter((item) => {
+        const matchCat = state.adminFilter === 'all' || item.category === state.adminFilter;
+        if (!matchCat) return false;
+        if (!searchTerm) return true;
+        return (
+          item.title.toLowerCase().includes(searchTerm) ||
+          item.category.toLowerCase().includes(searchTerm) ||
+          (item.price && item.price.toLowerCase().includes(searchTerm)) ||
+          (item.alt && item.alt.toLowerCase().includes(searchTerm))
+        );
+      });
+
+      els.catalogTableBody.innerHTML = '';
+
+      if (filtered.length === 0) {
+        const emptyRow = document.createElement('tr');
+        const emptyCell = document.createElement('td');
+        emptyCell.colSpan = 6;
+        emptyCell.style.textAlign = 'center';
+        emptyCell.style.padding = '36px 16px';
+        emptyCell.style.color = 'var(--text-muted)';
+        emptyCell.textContent = state.catalog.length === 0
+          ? 'No products saved in Firestore yet. Add a new design above or click "Seed Default Studio Showcase".'
+          : 'No designs match your current filter.';
+        emptyRow.appendChild(emptyCell);
+        els.catalogTableBody.appendChild(emptyRow);
+        return;
+      }
+
+      const frag = document.createDocumentFragment();
+
+      filtered.forEach((item) => {
+        const tr = document.createElement('tr');
+        const categoryLink = item.category === 'Seamless Patterns'
+          ? state.settings.patternsGigUrl
+          : state.settings.mylarGigUrl;
+
+        // Thumbnail
+        const tdThumb = document.createElement('td');
+        tdThumb.className = 'thumb-cell';
+        const img = document.createElement('img');
+        img.className = 'row-thumb';
+        img.src = item.imageUrl;
+        img.alt = item.title;
+        tdThumb.appendChild(img);
+
+        // Title & SEO Alt
+        const tdInfo = document.createElement('td');
+        const titleDiv = document.createElement('div');
+        titleDiv.className = 'row-title';
+        titleDiv.textContent = item.title;
+        const altDiv = document.createElement('div');
+        altDiv.className = 'row-alt';
+        altDiv.title = item.alt || '';
+        altDiv.textContent = item.alt || '';
+        tdInfo.appendChild(titleDiv);
+        tdInfo.appendChild(altDiv);
+
+        // Category
+        const tdCat = document.createElement('td');
+        tdCat.style.fontWeight = '600';
+        tdCat.style.whiteSpace = 'nowrap';
+        tdCat.textContent = item.category;
+
+        // Price
+        const tdPrice = document.createElement('td');
+        tdPrice.className = 'row-price tabular-nums';
+        tdPrice.textContent = item.price || '$25';
+
+        // Fiverr Link
+        const tdLink = document.createElement('td');
+        const linkEl = document.createElement('a');
+        linkEl.className = 'row-link';
+        linkEl.href = categoryLink;
+        linkEl.target = '_blank';
+        linkEl.rel = 'noopener noreferrer';
+        linkEl.textContent = categoryLink;
+        tdLink.appendChild(linkEl);
+
+        // Actions
+        const tdActions = document.createElement('td');
+        const actionWrap = document.createElement('div');
+        actionWrap.className = 'row-actions';
+
+        const editBtn = document.createElement('button');
+        editBtn.type = 'button';
+        editBtn.className = 'btn btn-outline btn-sm';
+        editBtn.textContent = 'Edit';
+        editBtn.addEventListener('click', () => openEditModal(item));
+
+        const delBtn = document.createElement('button');
+        delBtn.type = 'button';
+        delBtn.className = 'btn btn-danger-outline btn-sm';
+        delBtn.textContent = 'Delete';
+        delBtn.addEventListener('click', () => {
+          openConfirmModal(
+            'Delete Design from Firebase',
+            'Permanently remove "' + item.title + '" from Firestore and Firebase Storage?',
+            async () => {
+              if (!requireAuthenticatedAdmin()) return;
+              try {
+                await deleteDoc(doc(db, 'products', item.id));
+                await deleteStorageAsset(item.storagePath);
+                showToast('Design deleted from Firebase.', 'success');
+              } catch (error) {
+                handleFirestoreError(error, OperationType.DELETE, 'products/' + item.id);
+                showToast('Permission denied or failed to delete. Ensure you are signed in as admin.', 'error');
+              }
+            }
+          );
+        });
+
+        actionWrap.appendChild(editBtn);
+        actionWrap.appendChild(delBtn);
+        tdActions.appendChild(actionWrap);
+
+        tr.appendChild(tdThumb);
+        tr.appendChild(tdInfo);
+        tr.appendChild(tdCat);
+        tr.appendChild(tdPrice);
+        tr.appendChild(tdLink);
+        tr.appendChild(tdActions);
+        frag.appendChild(tr);
+      });
+
+      els.catalogTableBody.appendChild(frag);
+    }
+
+    /* ---------------------------------------------------------------------
+       10. SECTION SWITCHING
+       --------------------------------------------------------------------- */
+    const SECTION_LABELS = {
+      catalog: 'Catalog & Designs',
+      hero: 'Hero Banner Image',
+      links: 'Fiverr Category Links',
+      security: 'Security & Backup'
+    };
+
+    els.sidebarLinks.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-section');
+        state.activeSection = target;
+
+        els.sidebarLinks.forEach((b) => {
+          b.classList.toggle('is-active', b.getAttribute('data-section') === target);
+        });
+
+        Object.keys(els.sections).forEach((key) => {
+          els.sections[key].classList.toggle('hidden', key !== target);
+        });
+
+        els.breadcrumbSection.textContent = SECTION_LABELS[target] || 'Admin';
+      });
+    });
+
+    /* ---------------------------------------------------------------------
+       11. ADD NEW PRODUCT (FIREBASE STORAGE + FIRESTORE)
+       --------------------------------------------------------------------- */
+    function previewLocalFile(file, imgEl, onReady) {
+      if (!file || !file.type.startsWith('image/')) {
+        showToast('Please select a valid PNG, JPG, WEBP, or SVG image.', 'error');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        imgEl.src = e.target.result;
+        if (onReady) onReady(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    els.prodFile.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      state.pendingUploadFile = file;
+      previewLocalFile(file, els.uploadPreviewImg, () => {
+        els.uploadPreviewBox.classList.add('has-image');
+        els.dropzonePrompt.style.display = 'none';
+        els.uploadFileMeta.textContent = file.name + ' (' + Math.round(file.size / 1024) + ' KB) queued for Firebase Storage.';
+      });
+    });
+
+    els.uploadDropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      els.uploadDropzone.classList.add('is-dragover');
+    });
+    els.uploadDropzone.addEventListener('dragleave', () => {
+      els.uploadDropzone.classList.remove('is-dragover');
+    });
+    els.uploadDropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      els.uploadDropzone.classList.remove('is-dragover');
+      const file = e.dataTransfer.files && e.dataTransfer.files[0];
+      if (!file) return;
+      state.pendingUploadFile = file;
+      previewLocalFile(file, els.uploadPreviewImg, () => {
+        els.uploadPreviewBox.classList.add('has-image');
+        els.dropzonePrompt.style.display = 'none';
+        els.uploadFileMeta.textContent = file.name + ' (' + Math.round(file.size / 1024) + ' KB) queued for Firebase Storage.';
+      });
+    });
+
+    els.autoAltBtn.addEventListener('click', () => {
+      const cat = els.prodCategory.value;
+      const title = els.prodTitle.value.trim() || 'Original Artwork';
+      els.prodAlt.value = cat === 'Seamless Patterns'
+        ? title + ' – Seamless surface pattern design for textiles and print-ready repeat collections by Dilan Studio'
+        : title + ' – Custom Mylar bag packaging design with print-ready die-line artwork by Dilan Studio';
+    });
+
+    els.addProductForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!requireAuthenticatedAdmin()) return;
+
+      let finalImageUrl = els.prodImageUrlInput.value.trim();
+      let storagePath = '';
+
+      if (!state.pendingUploadFile && !finalImageUrl) {
+        showToast('Please upload an artwork file or provide a direct Image URL.', 'error');
+        return;
+      }
+
+      els.addSubmitBtn.disabled = true;
+      els.addSubmitBtn.textContent = 'Publishing...';
+
+      try {
+        if (state.pendingUploadFile) {
+          try {
+            const uploaded = await uploadImageToStorage(
+              state.pendingUploadFile,
+              'dilan-studio/products',
+              els.prodUploadProgressTrack,
+              els.prodUploadProgressFill
+            );
+            finalImageUrl = uploaded.downloadUrl;
+            storagePath = uploaded.storagePath;
+          } catch (storageErr) {
+            console.error('Firebase Storage Upload Error:', storageErr);
+            showToast('Firebase Storage upload failed (' + (storageErr.code || 'check Storage Rules in Firebase Console') + '). You can also paste an image URL below.', 'error');
+            return;
+          }
+        }
+
+        const productId = 'ds-' + Date.now();
+        const payload = {
+          title: els.prodTitle.value.trim(),
+          category: els.prodCategory.value,
+          price: normalizePrice(els.prodPrice.value),
+          alt: els.prodAlt.value.trim(),
+          imageUrl: finalImageUrl,
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp(),
+          createdBy: state.user.uid
+        };
+        if (storagePath) payload.storagePath = storagePath;
+
+        await setDoc(doc(db, 'products', productId), payload);
+
+        els.addProductForm.reset();
+        els.prodPrice.value = '$25';
+        state.pendingUploadFile = null;
+        els.uploadPreviewBox.classList.remove('has-image');
+        els.uploadPreviewImg.src = '';
+        els.dropzonePrompt.style.display = 'block';
+        els.uploadFileMeta.textContent = '';
+
+        showToast('Design published to Firebase Firestore!', 'success');
+      } catch (err) {
+        handleFirestoreError(err, OperationType.CREATE, 'products');
+        showToast('Failed to save product to Firestore. Verify admin account permissions.', 'error');
+      } finally {
+        els.addSubmitBtn.disabled = false;
+        els.addSubmitBtn.textContent = 'Publish Design to Firebase';
+      }
+    });
+
+    /* Seed Default Studio Showcase */
+    els.seedDefaultsBtn.addEventListener('click', async () => {
+      if (!requireAuthenticatedAdmin()) return;
+      els.seedDefaultsBtn.disabled = true;
+      try {
+        await setDoc(doc(db, 'siteSettings', 'public'), {
+          patternsGigUrl: DEFAULT_SETTINGS.patternsGigUrl,
+          mylarGigUrl: DEFAULT_SETTINGS.mylarGigUrl,
+          heroImageUrl: DEFAULT_SETTINGS.heroImageUrl,
+          updatedAt: serverTimestamp(),
+          updatedBy: state.user.uid
+        });
+
+        for (const item of DEFAULT_SEED_PRODUCTS) {
+          await setDoc(doc(db, 'products', item.id), {
+            title: item.title,
+            category: item.category,
+            price: item.price,
+            alt: item.alt,
+            imageUrl: item.imageUrl,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+            createdBy: state.user.uid
+          });
+        }
+        showToast('Default Dilan Studio catalog seeded to Firestore!', 'success');
+      } catch (err) {
+        handleFirestoreError(err, OperationType.WRITE, 'products');
+        showToast('Failed to seed catalog. Ensure you are signed in with the admin Google account.', 'error');
+      } finally {
+        els.seedDefaultsBtn.disabled = false;
+      }
+    });
+
+    /* ---------------------------------------------------------------------
+       12. EDIT PRODUCT MODAL
+       --------------------------------------------------------------------- */
+    function openEditModal(item) {
+      state.pendingEditFile = null;
+      els.editProdId.value = item.id;
+      els.editStoragePath.value = item.storagePath || '';
+      els.editProdCategory.value = item.category;
+      els.editProdPrice.value = item.price || '$25';
+      els.editProdTitle.value = item.title;
+      els.editProdAlt.value = item.alt || '';
+      els.editProdImageUrl.value = item.imageUrl || '';
+      els.editPreviewImg.src = item.imageUrl || '';
+      els.editProdFile.value = '';
+      els.editModal.classList.add('is-open');
+    }
+
+    function closeEditModal() {
+      els.editModal.classList.remove('is-open');
+      state.pendingEditFile = null;
+    }
+
+    els.editProdFile.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      state.pendingEditFile = file;
+      previewLocalFile(file, els.editPreviewImg);
+    });
+
+    els.editProdImageUrl.addEventListener('input', (e) => {
+      const val = e.target.value.trim();
+      if (val) els.editPreviewImg.src = val;
+    });
+
+    els.editProductForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!requireAuthenticatedAdmin()) return;
+
+      const id = els.editProdId.value;
+      const oldStoragePath = els.editStoragePath.value;
+      let nextImageUrl = els.editProdImageUrl.value.trim();
+      let nextStoragePath = oldStoragePath;
+
+      els.editSaveBtn.disabled = true;
+      els.editSaveBtn.textContent = 'Saving...';
+
+      try {
+        if (state.pendingEditFile) {
+          try {
+            const uploaded = await uploadImageToStorage(
+              state.pendingEditFile,
+              'dilan-studio/products',
+              els.editUploadProgressTrack,
+              els.editUploadProgressFill
+            );
+            nextImageUrl = uploaded.downloadUrl;
+            nextStoragePath = uploaded.storagePath;
+            if (oldStoragePath) await deleteStorageAsset(oldStoragePath);
+          } catch (storageErr) {
+            console.error('Firebase Storage Edit Upload Error:', storageErr);
+            showToast('Storage upload failed (' + (storageErr.code || 'check Storage Rules') + ').', 'error');
+            return;
+          }
+        }
+
+        const updatePayload = {
+          category: els.editProdCategory.value,
+          price: normalizePrice(els.editProdPrice.value),
+          title: els.editProdTitle.value.trim(),
+          alt: els.editProdAlt.value.trim(),
+          imageUrl: nextImageUrl,
+          updatedAt: serverTimestamp()
+        };
+        if (nextStoragePath) updatePayload.storagePath = nextStoragePath;
+
+        await updateDoc(doc(db, 'products', id), updatePayload);
+        closeEditModal();
+        showToast('Design updated in Firebase!', 'success');
+      } catch (err) {
+        handleFirestoreError(err, OperationType.UPDATE, 'products/' + id);
+        showToast('Failed to update design in Firestore.', 'error');
+      } finally {
+        els.editSaveBtn.disabled = false;
+        els.editSaveBtn.textContent = 'Save Changes to Firebase';
+      }
+    });
+
+    els.editModalClose.addEventListener('click', closeEditModal);
+    els.editCancelBtn.addEventListener('click', closeEditModal);
+
+    /* ---------------------------------------------------------------------
+       13. EDITABLE HERO BANNER IMAGE (FIREBASE STORAGE + FIRESTORE)
+       --------------------------------------------------------------------- */
+    els.heroFileInput.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      state.pendingHeroFile = file;
+      previewLocalFile(file, els.heroPreviewImg, () => {
+        els.heroFileMeta.textContent = file.name + ' (' + Math.round(file.size / 1024) + ' KB) ready to upload.';
+      });
+    });
+
+    els.heroImageUrlInput.addEventListener('input', (e) => {
+      const val = e.target.value.trim();
+      if (val) els.heroPreviewImg.src = val;
+    });
+
+    els.heroForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!requireAuthenticatedAdmin()) return;
+
+      let heroUrl = els.heroImageUrlInput.value.trim() || DEFAULT_SETTINGS.heroImageUrl;
+
+      els.saveHeroBtn.disabled = true;
+      els.saveHeroBtn.textContent = 'Saving Hero...';
+
+      try {
+        if (state.pendingHeroFile) {
+          try {
+            const uploaded = await uploadImageToStorage(
+              state.pendingHeroFile,
+              'dilan-studio/hero',
+              els.heroUploadProgressTrack,
+              els.heroUploadProgressFill
+            );
+            heroUrl = uploaded.downloadUrl;
+            els.heroImageUrlInput.value = heroUrl;
+            state.pendingHeroFile = null;
+            els.heroFileMeta.textContent = 'Uploaded to Firebase Storage.';
+          } catch (storageErr) {
+            console.error('Hero Storage Upload Error:', storageErr);
+            showToast('Hero Storage upload failed (' + (storageErr.code || 'check Storage Rules') + '). You can still paste an external URL.', 'error');
+            return;
+          }
+        }
+
+        await setDoc(doc(db, 'siteSettings', 'public'), {
+          patternsGigUrl: state.settings.patternsGigUrl || DEFAULT_SETTINGS.patternsGigUrl,
+          mylarGigUrl: state.settings.mylarGigUrl || DEFAULT_SETTINGS.mylarGigUrl,
+          heroImageUrl: heroUrl,
+          updatedAt: serverTimestamp(),
+          updatedBy: state.user.uid
+        });
+
+        showToast('Homepage Hero Banner updated live across all visitors!', 'success');
+      } catch (err) {
+        handleFirestoreError(err, OperationType.WRITE, 'siteSettings/public');
+        showToast('Failed to save Hero Banner to Firestore.', 'error');
+      } finally {
+        els.saveHeroBtn.disabled = false;
+        els.saveHeroBtn.textContent = 'Save Hero Banner to Firebase';
+      }
+    });
+
+    els.resetHeroBtn.addEventListener('click', () => {
+      state.pendingHeroFile = null;
+      els.heroImageUrlInput.value = DEFAULT_SETTINGS.heroImageUrl;
+      els.heroPreviewImg.src = DEFAULT_SETTINGS.heroImageUrl;
+      els.heroFileMeta.textContent = 'Click "Save Hero Banner to Firebase" to publish default image.';
+    });
+
+    /* ---------------------------------------------------------------------
+       14. FIVERR CATEGORY LINKS, FILTERS, PIN & BACKUP
+       --------------------------------------------------------------------- */
+    els.linksForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!requireAuthenticatedAdmin()) return;
+
+      const patUrl = normalizeUrl(els.linkPatterns.value);
+      const mylUrl = normalizeUrl(els.linkMylar.value);
+
+      try {
+        new URL(patUrl);
+        new URL(mylUrl);
+      } catch (err) {
+        showToast('Please enter valid https:// URLs for both categories.', 'error');
+        return;
+      }
+
+      els.saveLinksBtn.disabled = true;
+      try {
+        await setDoc(doc(db, 'siteSettings', 'public'), {
+          patternsGigUrl: patUrl,
+          mylarGigUrl: mylUrl,
+          heroImageUrl: state.settings.heroImageUrl || DEFAULT_SETTINGS.heroImageUrl,
+          updatedAt: serverTimestamp(),
+          updatedBy: state.user.uid
+        });
+        showToast('Master Fiverr category links saved to Firestore!', 'success');
+      } catch (err) {
+        handleFirestoreError(err, OperationType.WRITE, 'siteSettings/public');
+        showToast('Failed to save Fiverr links to Firestore.', 'error');
+      } finally {
+        els.saveLinksBtn.disabled = false;
+      }
+    });
+
+    els.adminFilterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        state.adminFilter = btn.getAttribute('data-admin-filter');
+        els.adminFilterBtns.forEach((b) => {
+          b.classList.toggle('is-active', b.getAttribute('data-admin-filter') === state.adminFilter);
+        });
+        renderCatalogTable();
+      });
+    });
+
+    els.adminSearch.addEventListener('input', (e) => {
+      state.adminSearch = e.target.value;
+      renderCatalogTable();
+    });
+
+    els.changePinForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nextPin = els.newPinInput.value.trim();
+      const confirmPin = els.confirmPinInput.value.trim();
+
+      if (nextPin.length < 4) {
+        showToast('PIN must be at least 4 characters.', 'error');
+        return;
+      }
+      if (nextPin !== confirmPin) {
+        showToast('PIN confirmation does not match.', 'error');
+        return;
+      }
+
+      const nextHash = await hashPin(nextPin);
+      localStorage.setItem(PIN_STORAGE_KEY, nextHash);
+      els.changePinForm.reset();
+      showToast('Admin PIN updated.', 'success');
+    });
+
+    els.exportJsonBtn.addEventListener('click', () => {
+      const payload = {
+        exportedAt: new Date().toISOString(),
+        settings: state.settings,
+        catalog: state.catalog
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'dilan-studio-firebase-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('Catalog backup exported.', 'success');
+    });
+
+    // Confirm Modal Bindings
+    els.confirmCloseBtn.addEventListener('click', closeConfirmModal);
+    els.confirmCancelBtn.addEventListener('click', closeConfirmModal);
+    els.confirmProceedBtn.addEventListener('click', async () => {
+      const fn = state.pendingConfirmAction;
+      closeConfirmModal();
+      if (typeof fn === 'function') await fn();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (els.editModal.classList.contains('is-open')) closeEditModal();
+        if (els.confirmModal.classList.contains('is-open')) closeConfirmModal();
+      }
+    });
+
+    // Initialize PIN & Session
+    ensurePinInitialized().then(() => {
+      if (sessionStorage.getItem(SESSION_UNLOCKED_KEY) === '1') {
+        unlockConsole();
+      }
+    });
+  </script>
+</body>
+</html>
